@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="前端," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="庆义">
+<meta name="description" content="JS语言特点：①单线程                      ②解释性语言（解释一行执行一行）JS运行三步：①语法分析 ②预编译 ③解释执行 将函数声明提升到逻辑的最前面：函数声明整体提升变量声明提升 1.imply global 暗示全局变量：任何变量，如果变量未经声明就赋值，此变量就为全局对象所有即console.log(a)会报错而a=123;   console.log(a);不报错，">
+<meta name="keywords" content="前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="预编译">
 <meta property="og:url" content="http://yoursite.com/2018/09/13/预编译/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="庆义">
+<meta property="og:description" content="JS语言特点：①单线程                      ②解释性语言（解释一行执行一行）JS运行三步：①语法分析 ②预编译 ③解释执行 将函数声明提升到逻辑的最前面：函数声明整体提升变量声明提升 1.imply global 暗示全局变量：任何变量，如果变量未经声明就赋值，此变量就为全局对象所有即console.log(a)会报错而a=123;   console.log(a);不报错，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-13T13:17:18.728Z">
+<meta property="og:updated_time" content="2018-09-13T17:33:12.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="预编译">
-<meta name="twitter:description" content="庆义">
+<meta name="twitter:description" content="JS语言特点：①单线程                      ②解释性语言（解释一行执行一行）JS运行三步：①语法分析 ②预编译 ③解释执行 将函数声明提升到逻辑的最前面：函数声明整体提升变量声明提升 1.imply global 暗示全局变量：任何变量，如果变量未经声明就赋值，此变量就为全局对象所有即console.log(a)会报错而a=123;   console.log(a);不报错，">
 
 
 
@@ -299,7 +300,14 @@
       
 
       
-        <p>庆义</p>
+        <p>JS语言特点：①单线程<br>                      ②解释性语言（解释一行执行一行）<br>JS运行三步：①语法分析 ②预编译 ③解释执行</p>
+<p>将函数声明提升到逻辑的最前面：函数声明整体提升<br>变量声明提升</p>
+<p>1.imply global 暗示全局变量：任何变量，如果变量未经声明就赋值，此变量就为全局对象所有<br>即console.log(a)会报错<br>而a=123;<br>   console.log(a);不报错，显示a的值<br>2.一切声明的全局变量，全是window的属性<br>a=10;   —–&gt;window.a=10;<br>var b=534;  —–&gt;window.b=534;<br>window就是全局的域<br>function test(){<br> var a=b=123;<br>}<br>test();<br>连续赋值从右向左赋值，相当于把123赋给b，b再赋给a，但此时就相当于是未声明b就直接赋值给b，b归window所有<br>console.log(window.a) —-&gt; undefined （a不是全局变量）<br>console.log(window.b) —–&gt; 123</p>
+<p>预编译<br>预编译发生在函数执行的前一刻，解决函数执行顺序<br>function fn(a){<br>  console.log(a);<br>  var a=123;<br>  console.log(a);<br>  function a() {}<br>  console.log(a);<br>  var b=function(){}<br>  console.log(b);<br>  function d(){}<br>}<br>fn(1)<br>1.创建AO对象 Activation Object 执行期上下文<br>相当于是函数产生的存储空间库</p>
+<p>2.找形参和变量声明，将变量和形参名作为AO对象的属性名<br>值统一是undefined</p>
+<p>AO{<br>        a:undefined,<br>        b:undefined，<br>}<br>3.将实参和形参相统一</p>
+<p>AO{<br>        a:1,<br>        b:undefined，<br>}<br>4.在函数体里面找函数声明作为AO对象的属性名，值赋予函数体</p>
+<p>AO{<br>        a:1,<br>        b:undefined，<br>        d:function d()<br>}<br>此方法解决了优先级顺序，谁覆盖谁的问题</p>
 
       
     </div>
@@ -314,6 +322,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+        </div>
       
 
       
@@ -333,6 +347,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/23/作用域与作用域链/" rel="prev" title="作用域与作用域链">
+                作用域与作用域链 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -400,7 +418,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -408,6 +426,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
             
 
           </nav>

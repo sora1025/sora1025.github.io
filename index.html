@@ -229,6 +229,130 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/23/作用域与作用域链/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/23/作用域与作用域链/" itemprop="url">作用域与作用域链</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-23T14:58:58+08:00">
+                2018-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>（一）<br>函数是一种特殊的对象，函数类对象，只要是对象就有属性。属性分可访问的和不可访问的。<br>不可访问的属性仅供JavaScript引擎存取，[[scope]]就是其中一个<br>test.[[scope]] 指的就是作用域，其中存储了执行期上下文的集合，这个集合呈链式连接，我们把这种链式连接叫做作用域链</p>
+<p>作用域因为函数的产生而产生,函数执行时产生执行期上下文，被放在作用域链的最顶端</p>
+<p>（二）<br>1.<br>function a(){<br>}<br>var glob=100;<br>a();<br>a函数被定义时  a.[[scope]] —&gt; 0:GO<br>a函数执行时    a.[[scope]] —-&gt;0:AO<br>                               1:GO<br>AO放在作用域链的顶端</p>
+<p>2.<br>function a(){<br>  function b(){<br>  var b=234;<br>}<br>var a=123;<br>b();<br>}<br>var glob=100;<br>a();</p>
+<p>b defined [[scope]]  —-&gt; 0:aAO 对a的AO环境下产生，引用a的AO<br>                           1:GO<br>b doing   [[scope]]  —-&gt; 0:bAO b函数执行，产生执行期上下文，置于作用域顶端<br>                     —-&gt; 1:aAO<br>                     —-&gt; 2:GO</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/13/预编译/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -300,7 +424,14 @@
       
         
           
-            <p>庆义</p>
+            <p>JS语言特点：①单线程<br>                      ②解释性语言（解释一行执行一行）<br>JS运行三步：①语法分析 ②预编译 ③解释执行</p>
+<p>将函数声明提升到逻辑的最前面：函数声明整体提升<br>变量声明提升</p>
+<p>1.imply global 暗示全局变量：任何变量，如果变量未经声明就赋值，此变量就为全局对象所有<br>即console.log(a)会报错<br>而a=123;<br>   console.log(a);不报错，显示a的值<br>2.一切声明的全局变量，全是window的属性<br>a=10;   —–&gt;window.a=10;<br>var b=534;  —–&gt;window.b=534;<br>window就是全局的域<br>function test(){<br> var a=b=123;<br>}<br>test();<br>连续赋值从右向左赋值，相当于把123赋给b，b再赋给a，但此时就相当于是未声明b就直接赋值给b，b归window所有<br>console.log(window.a) —-&gt; undefined （a不是全局变量）<br>console.log(window.b) —–&gt; 123</p>
+<p>预编译<br>预编译发生在函数执行的前一刻，解决函数执行顺序<br>function fn(a){<br>  console.log(a);<br>  var a=123;<br>  console.log(a);<br>  function a() {}<br>  console.log(a);<br>  var b=function(){}<br>  console.log(b);<br>  function d(){}<br>}<br>fn(1)<br>1.创建AO对象 Activation Object 执行期上下文<br>相当于是函数产生的存储空间库</p>
+<p>2.找形参和变量声明，将变量和形参名作为AO对象的属性名<br>值统一是undefined</p>
+<p>AO{<br>        a:undefined,<br>        b:undefined，<br>}<br>3.将实参和形参相统一</p>
+<p>AO{<br>        a:1,<br>        b:undefined，<br>}<br>4.在函数体里面找函数声明作为AO对象的属性名，值赋予函数体</p>
+<p>AO{<br>        a:1,<br>        b:undefined，<br>        d:function d()<br>}<br>此方法解决了优先级顺序，谁覆盖谁的问题</p>
 
           
         
@@ -510,7 +641,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -518,6 +649,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
             
 
           </nav>
