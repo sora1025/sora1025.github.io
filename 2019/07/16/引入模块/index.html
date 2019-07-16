@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="vue," />
+  <meta name="keywords" content="node.js," />
 
 
 
@@ -79,30 +79,18 @@
 
 
 
-<meta name="description" content="bus又叫数据总线。在计算机组成原理中有看到过这个名词，在计组里是用来传递数据的。之前在node.js教程中也看过EventEmitter，好像是类似的东西，之后再学习~在vue中，bus传值适用于传递数据不多的情况。本篇博客详细讨论一下bus的实现以及我实现过程中踩过的坑~ 首先写一开始我用的方法。123//在assest目录下创建bus.js文件import Vue from &amp;apos;vu">
-<meta name="keywords" content="vue">
+<meta name="description" content="写在前面本来是在跟着博客学Express的，没想到这个原作者介绍的异常详细，里面有一些内容解决了我一直以来的很多疑惑。所以新开一篇文章记录。原文链接：https://bignerdcoding.com/archives/42.html 引入内置模块Node 已经内置了很多实用模块，例如，文件系统模块 fs，工具函数模块util。 在 Node 编写的 Web 应用中，最常见的任务当属 URL 解析">
+<meta name="keywords" content="node.js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue传值之bus">
-<meta property="og:url" content="http://yoursite.com/2019/07/05/vue-bus/index.html">
+<meta property="og:title" content="引入模块">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/引入模块/index.html">
 <meta property="og:site_name" content="Sora">
-<meta property="og:description" content="bus又叫数据总线。在计算机组成原理中有看到过这个名词，在计组里是用来传递数据的。之前在node.js教程中也看过EventEmitter，好像是类似的东西，之后再学习~在vue中，bus传值适用于传递数据不多的情况。本篇博客详细讨论一下bus的实现以及我实现过程中踩过的坑~ 首先写一开始我用的方法。123//在assest目录下创建bus.js文件import Vue from &amp;apos;vu">
+<meta property="og:description" content="写在前面本来是在跟着博客学Express的，没想到这个原作者介绍的异常详细，里面有一些内容解决了我一直以来的很多疑惑。所以新开一篇文章记录。原文链接：https://bignerdcoding.com/archives/42.html 引入内置模块Node 已经内置了很多实用模块，例如，文件系统模块 fs，工具函数模块util。 在 Node 编写的 Web 应用中，最常见的任务当属 URL 解析">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus1.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus2.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus3.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus4.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus5.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus6.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus7.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus8.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus9.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus10.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus11.png">
-<meta property="og:updated_time" content="2019-07-05T08:58:12.446Z">
+<meta property="og:updated_time" content="2019-07-16T11:58:55.080Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vue传值之bus">
-<meta name="twitter:description" content="bus又叫数据总线。在计算机组成原理中有看到过这个名词，在计组里是用来传递数据的。之前在node.js教程中也看过EventEmitter，好像是类似的东西，之后再学习~在vue中，bus传值适用于传递数据不多的情况。本篇博客详细讨论一下bus的实现以及我实现过程中踩过的坑~ 首先写一开始我用的方法。123//在assest目录下创建bus.js文件import Vue from &amp;apos;vu">
-<meta name="twitter:image" content="http://yoursite.com/2019/07/05/vue-bus/img/bus/bus1.png">
+<meta name="twitter:title" content="引入模块">
+<meta name="twitter:description" content="写在前面本来是在跟着博客学Express的，没想到这个原作者介绍的异常详细，里面有一些内容解决了我一直以来的很多疑惑。所以新开一篇文章记录。原文链接：https://bignerdcoding.com/archives/42.html 引入内置模块Node 已经内置了很多实用模块，例如，文件系统模块 fs，工具函数模块util。 在 Node 编写的 Web 应用中，最常见的任务当属 URL 解析">
 
 
 
@@ -132,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/05/vue-bus/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/07/16/引入模块/"/>
 
 
 
 
 
-  <title>vue传值之bus | Sora</title>
+  <title>引入模块 | Sora</title>
   
 
 
@@ -245,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/05/vue-bus/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/引入模块/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sora">
@@ -262,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vue传值之bus</h1>
+          <h1 class="post-title" itemprop="name headline">引入模块</h1>
         
 
         <div class="post-meta">
@@ -274,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-05T16:51:17+08:00">
-                2019-07-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-16T19:58:25+08:00">
+                2019-07-16
               </time>
             
 
@@ -312,16 +300,15 @@
       
 
       
-        <p>bus又叫数据总线。在计算机组成原理中有看到过这个名词，在计组里是用来传递数据的。之前在node.js教程中也看过EventEmitter，好像是类似的东西，之后再学习~<br>在vue中，bus传值适用于传递数据不多的情况。本篇博客详细讨论一下bus的实现以及我实现过程中踩过的坑~</p>
-<p>首先写一开始我用的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//在assest目录下创建bus.js文件</span><br><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">export default new Vue;</span><br></pre></td></tr></table></figure></p>
-<p>然后在需要传值的两个组件中引入bus<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import bus from &apos;../assest/bus.js&apos;</span><br></pre></td></tr></table></figure></p>
-<p>要传值的两个组件我分别命名成father.vue和uncle.vue。<br><img src="./img/bus/bus1.png" alt="father.vue"><br><img src="./img/bus/bus2.png" alt="uncle.vue"></p>
-<p>接下来就是激动人心的运行时间！<br>点击按钮，再跳转路由到uncle组件，发现数据并没有渲染。<br><img src="./img/bus/bus3.png" alt=""><br><img src="./img/bus/bus4.png" alt=""><br>我们再打开控制台，发现只打印了1！也就是on后面的内容并没有被触发。<br><img src="./img/bus/bus5.png" alt=""></p>
-<p>后来我仔细比对了一下我和网上代码的差异，最后发现我是路由跳转，网上的例子是将两个组件同时注入app.vue这个根组件，不需要路由跳转。<strong>我们知道，bus的$on的监听应该位于$emit之前</strong>。而学习vue的同学知道，<strong>路由跳转，页面是要重新渲染的</strong>，这就涉及到vue的生命周期问题。</p>
-<p>基于上述问题，我们来在两个组件中加上所有的生命周期钩子来查看一下：<br><img src="./img/bus/bus6.png" alt=""><br><img src="./img/bus/bus7.png" alt=""></p>
-<p>打开控制台，发现下面的结果<br><img src="./img/bus/bus8.png" alt=""><br>也就是说，$on监听应该放在uncle的beforeCreate，created或者beforeMount函数中，$emit应放在father的beforeDestroy或者destroyed函数中。<br><img src="./img/bus/bus9.png" alt=""><br><img src="./img/bus/bus10.png" alt=""><br><img src="./img/bus/bus11.png" alt=""></p>
-<p>这样就成功拿到数据了，我放在了beforeCreate和beforeDestroy函数中，其他的也是可以的，大家可自行测试。</p>
-<p>关于EventBus，更多可以参考这篇博客，我觉得挺不错<a href="https://www.jianshu.com/p/4fa3bf211785" target="_blank" rel="noopener">https://www.jianshu.com/p/4fa3bf211785</a></p>
+        <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>本来是在跟着博客学Express的，没想到这个原作者介绍的异常详细，里面有一些内容解决了我一直以来的很多疑惑。所以新开一篇文章记录。原文链接：<a href="https://bignerdcoding.com/archives/42.html" target="_blank" rel="noopener">https://bignerdcoding.com/archives/42.html</a></p>
+<h4 id="引入内置模块"><a href="#引入内置模块" class="headerlink" title="引入内置模块"></a>引入内置模块</h4><p>Node 已经内置了很多实用模块，例如，文件系统模块 <em>fs</em>，工具函数模块<em>util</em>。</p>
+<p>在 Node 编写的 Web 应用中，最常见的任务当属 URL 解析了。浏览器通过特定的 URL 来请求服务器上对应的资源。例如，访问主页、访问关于页面 的网络请求。这些 URL 都以字符串的形式存在，我们需要对其进行解析然后获取更多的信息。这里我们通过对 URL 进行解析来介绍如何引入内置模块。</p>
+<p>内置的<em>url</em>模块中暴露的方法不多，不过其中有一个<em>parse</em>函数非常有用。它能从 URL 字符串中提取到类似域名和路径等有益信息。</p>
+<p>这里我们使用<em>require</em>来实现模块导入，该命令与之前提到的 Include、Import 的作用一致。<strong>通过将模块名作为参数，该命令就能成功的返回对应的模块</strong>。大多数情况下，该返回的对象是一个 object 对象，但有时也可能会是字符串、数字、或者函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//举个栗子</span><br><span class="line">var url = require(&apos;url&apos;);</span><br><span class="line">var parsedURL = url.parse(&quot;http://www.example.com/profile?name=sora&quot;);</span><br><span class="line"></span><br><span class="line">console.log(parsedURL.protocol); //&quot;http:&quot;</span><br><span class="line">console.log(parsedURL.host); //&quot;www.example.com&quot;</span><br><span class="line">console.log(parsedURL.query); //&quot;name=sora&quot;</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用npm和package-json引入第三方模块"><a href="#使用npm和package-json引入第三方模块" class="headerlink" title="使用npm和package.json引入第三方模块"></a>使用npm和package.json引入第三方模块</h4><p>Node 的内置模块远远不能满足日常开发需要，所以引入第三方模块是一个必须要掌握的技能。</p>
+<h5 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//必需字段</span><br><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;:&quot;project&quot;, //包名，在NPM服务器上须要保持唯一</span><br><span class="line">    &quot;version&quot;:&quot;1.0.0&quot;, //当前版本号</span><br><span class="line">    &quot;dependencies&quot;:&#123;&#125;, //三方包依赖。需要指定包名和版本号</span><br><span class="line">    &quot;main&quot;:&quot;./lib/echo.js&quot;,</span><br><span class="line">    &quot;bin&quot;:&#123;</span><br><span class="line">        &quot;project&quot;:&quot;./bin/project&quot; //命令行程序和主模块名称</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h5><p>通常npm被称为Node包管理器。运行<em>npm install xxx</em> <em>–save</em>。该命令会新建一个<em>node_modules</em>文件夹并将你输入的包保存到文件夹下。<em>–save</em> 参数会把该模块添加到<em>package.json</em>文件中。<br>但如果没有使用 <em>–save</em> 选项的话，虽然也会创建<em>node_modules</em>文件夹把该模块保存到同名子目录下，但是<em>package.json</em>将不会发生任何变化。<br>这里之所以将这些依赖关系保存到<em>package.json</em>是为了方便其他开发者在得到工程后直接使用<em>npm install</em>完成所有依赖项的安装。另一个原因是Node项目在进行代码管理时通常都会忽略<em>node_modules</em>文件夹而只保留<em>package.json</em>。</p>
+<p>除了安装依赖项之外，npm还能完成其他任务。使用<em>npm init</em>可以自动生成package.json而不是通过手动编辑的方式。在一个新工程的文件夹中可以通过此方法来配置工程名、作者、版本等信息，然后npm就会自定生成对应的package.json文件。这种自动化过程可以节约开发者的时间。</p>
 
       
     </div>
@@ -339,7 +326,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/vue/" rel="tag"># vue</a>
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
           
         </div>
       
@@ -352,8 +339,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/30/HTTP缓存/" rel="next" title="HTTP缓存">
-                <i class="fa fa-chevron-left"></i> HTTP缓存
+              <a href="/2019/07/16/Connect中间件/" rel="next" title="Connect中间件">
+                <i class="fa fa-chevron-left"></i> Connect中间件
               </a>
             
           </div>
@@ -361,10 +348,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/16/Connect中间件/" rel="prev" title="Connect中间件">
-                Connect中间件 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -416,8 +399,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -468,6 +460,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引入内置模块"><span class="nav-number">2.</span> <span class="nav-text">引入内置模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用npm和package-json引入第三方模块"><span class="nav-number">3.</span> <span class="nav-text">使用npm和package.json引入第三方模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#package-json"><span class="nav-number">3.1.</span> <span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#npm"><span class="nav-number">3.2.</span> <span class="nav-text">npm</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
