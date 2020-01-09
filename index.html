@@ -249,6 +249,142 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/09/域名收敛和域名发散/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/09/域名收敛和域名发散/" itemprop="url">域名收敛和域名发散</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-09T14:52:21+08:00">
+                2020-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>今天在学习过程中看到一个名词：<strong>域名收敛</strong>。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！</p>
+<h4 id="域名发散"><a href="#域名发散" class="headerlink" title="域名发散"></a>域名发散</h4><p>由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：</p>
+<blockquote>
+<p>http静态资源采用多个子域名</p>
+</blockquote>
+<p>目的是充分利用现代浏览器的<strong>多线程并发下载能力</strong>。所以PC时代对静态资源优化时，通常将静态资源分布在几个不同域，保证资源最完美地分域名存储。</p>
+<h4 id="域名收敛"><a href="#域名收敛" class="headerlink" title="域名收敛"></a>域名收敛</h4><p>域名收敛就是建议将静态资源只放在一个域名下面，而非发散情况下的多个域名下。可是上面说了，域名发散可以提高并发下载能力，为什么这里又提倡域名收敛？是因为域名发散是PC时代的产物，对于PC上的DNS通常情况下就是几十ms，因为PC可以存储很多的域名地址。但现在进入移动互联网时代，对于手机端来说，一般在手机端解析DNS会到1s+，首屏的3s的最佳时间，已经没了1/3.</p>
+<p>所以一般来说，<strong>在手机端上的域名数不能超过5个</strong>。基本的分配就是</p>
+<p>HTML +1</p>
+<p>CSS +1</p>
+<p>img +1</p>
+<p>JS +1</p>
+<p>fonts +1</p>
+<p>不过也得看具体应用场景</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>DNS解析是一个很复杂的过程，在PC上，我们采用域名发散策略，是因为在PC端上，DNS解析通常只需要几十ms。而移动端，2G网络，3G网络，4G网络/wifi强网，DNS的消耗相当可观。在增加域的同时，往往会给浏览器带来DNS解析的开销。所以在这种情况下，提出了域名收敛，减少域名数量可以降低DNS解析的成本。</p>
+<p>传送门一：<a href="https://segmentfault.com/a/1190000004641599" target="_blank" rel="noopener">域名收敛–前端优化(二)</a></p>
+<p>传送门二：<a href="https://www.cnblogs.com/coco1s/p/5365179.html" target="_blank" rel="noopener">【前端性能】浅谈域名发散与域名收敛</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/把一个对象拆分成多个对象/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1603,7 +1739,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1616,7 +1752,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -1653,7 +1789,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
