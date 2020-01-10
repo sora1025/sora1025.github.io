@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="前端性能优化," />
+  <meta name="keywords" content="算法," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="写在前面今天在学习过程中看到一个名词：域名收敛。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！ 域名发散由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：  http静态资源采用多个">
-<meta name="keywords" content="前端性能优化">
+<meta name="description" content="题目描述给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素 示例1：12输入：[2,2,1]输出：1 解法看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。 异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程12345let a = 1^2 //3//转换过程//1 -&amp;gt; 01//2 -&amp;g">
+<meta name="keywords" content="算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="域名收敛和域名发散">
-<meta property="og:url" content="http://yoursite.com/2020/01/09/域名收敛和域名发散/index.html">
+<meta property="og:title" content="只出现一次的数字">
+<meta property="og:url" content="http://yoursite.com/2020/01/10/只出现一次的数字/index.html">
 <meta property="og:site_name" content="Sora">
-<meta property="og:description" content="写在前面今天在学习过程中看到一个名词：域名收敛。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！ 域名发散由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：  http静态资源采用多个">
+<meta property="og:description" content="题目描述给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素 示例1：12输入：[2,2,1]输出：1 解法看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。 异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程12345let a = 1^2 //3//转换过程//1 -&amp;gt; 01//2 -&amp;g">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-01-09T06:52:57.359Z">
+<meta property="og:updated_time" content="2020-01-10T07:10:20.164Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="域名收敛和域名发散">
-<meta name="twitter:description" content="写在前面今天在学习过程中看到一个名词：域名收敛。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！ 域名发散由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：  http静态资源采用多个">
+<meta name="twitter:title" content="只出现一次的数字">
+<meta name="twitter:description" content="题目描述给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素 示例1：12输入：[2,2,1]输出：1 解法看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。 异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程12345let a = 1^2 //3//转换过程//1 -&amp;gt; 01//2 -&amp;g">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/09/域名收敛和域名发散/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/10/只出现一次的数字/"/>
 
 
 
 
 
-  <title>域名收敛和域名发散 | Sora</title>
+  <title>只出现一次的数字 | Sora</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/09/域名收敛和域名发散/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/只出现一次的数字/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sora">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">域名收敛和域名发散</h1>
+          <h1 class="post-title" itemprop="name headline">只出现一次的数字</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-09T14:52:21+08:00">
-                2020-01-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-10T15:09:50+08:00">
+                2020-01-10
               </time>
             
 
@@ -320,23 +320,12 @@
       
 
       
-        <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>今天在学习过程中看到一个名词：<strong>域名收敛</strong>。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！</p>
-<h4 id="域名发散"><a href="#域名发散" class="headerlink" title="域名发散"></a>域名发散</h4><p>由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：</p>
-<blockquote>
-<p>http静态资源采用多个子域名</p>
-</blockquote>
-<p>目的是充分利用现代浏览器的<strong>多线程并发下载能力</strong>。所以PC时代对静态资源优化时，通常将静态资源分布在几个不同域，保证资源最完美地分域名存储。</p>
-<h4 id="域名收敛"><a href="#域名收敛" class="headerlink" title="域名收敛"></a>域名收敛</h4><p>域名收敛就是建议将静态资源只放在一个域名下面，而非发散情况下的多个域名下。可是上面说了，域名发散可以提高并发下载能力，为什么这里又提倡域名收敛？是因为域名发散是PC时代的产物，对于PC上的DNS通常情况下就是几十ms，因为PC可以存储很多的域名地址。但现在进入移动互联网时代，对于手机端来说，一般在手机端解析DNS会到1s+，首屏的3s的最佳时间，已经没了1/3.</p>
-<p>所以一般来说，<strong>在手机端上的域名数不能超过5个</strong>。基本的分配就是</p>
-<p>HTML +1</p>
-<p>CSS +1</p>
-<p>img +1</p>
-<p>JS +1</p>
-<p>fonts +1</p>
-<p>不过也得看具体应用场景</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>DNS解析是一个很复杂的过程，在PC上，我们采用域名发散策略，是因为在PC端上，DNS解析通常只需要几十ms。而移动端，2G网络，3G网络，4G网络/wifi强网，DNS的消耗相当可观。在增加域的同时，往往会给浏览器带来DNS解析的开销。所以在这种情况下，提出了域名收敛，减少域名数量可以降低DNS解析的成本。</p>
-<p>传送门一：<a href="https://segmentfault.com/a/1190000004641599" target="_blank" rel="noopener">域名收敛–前端优化(二)</a></p>
-<p>传送门二：<a href="https://www.cnblogs.com/coco1s/p/5365179.html" target="_blank" rel="noopener">【前端性能】浅谈域名发散与域名收敛</a></p>
+        <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素</p>
+<p>示例1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[2,2,1]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure></p>
+<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><p>看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。</p>
+<p>异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let a = 1^2 //3</span><br><span class="line">//转换过程</span><br><span class="line">//1 -&gt; 01</span><br><span class="line">//2 -&gt; 10</span><br><span class="line">//1^2 -&gt; 11 -&gt;3</span><br></pre></td></tr></table></figure></p>
+<p>关于异或这种解法，首先有几个数学知识要掌握：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 交换律：a^b^c &lt;=&gt; a^c^b</span><br><span class="line">2. 任何数异或0为任何数：n^0 &lt;=&gt; n</span><br><span class="line">3. 相同数异或为0: n^n</span><br></pre></td></tr></table></figure></p>
+<p>掌握了这些知识，这道题就迎刃而解了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var singleNumber = function(nums) &#123;</span><br><span class="line">    let res = 0;    //0与任何数异或为任何数</span><br><span class="line">    for(let i = 0;i&lt;nums.length;i++)&#123;</span><br><span class="line">        res^=nums[i]; //如果之后出现相同的数结果就会为0，继续进行异或操作</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -354,7 +343,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前端性能优化/" rel="tag"># 前端性能优化</a>
+            <a href="/tags/算法/" rel="tag"># 算法</a>
           
         </div>
       
@@ -367,8 +356,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/04/把一个对象拆分成多个对象/" rel="next" title="把一个对象拆分成多个对象">
-                <i class="fa fa-chevron-left"></i> 把一个对象拆分成多个对象
+              <a href="/2020/01/09/域名收敛和域名发散/" rel="next" title="域名收敛和域名发散">
+                <i class="fa fa-chevron-left"></i> 域名收敛和域名发散
               </a>
             
           </div>
@@ -376,10 +365,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/10/只出现一次的数字/" rel="prev" title="只出现一次的数字">
-                只出现一次的数字 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -502,7 +487,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#域名发散"><span class="nav-number">2.</span> <span class="nav-text">域名发散</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#域名收敛"><span class="nav-number">3.</span> <span class="nav-text">域名收敛</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解法"><span class="nav-number">2.</span> <span class="nav-text">解法</span></a></li></ol></div>
             
 
           </div>
