@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="算法," />
+  <meta name="keywords" content="JavaScript," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="题目描述给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素 示例1：12输入：[2,2,1]输出：1 解法看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。 异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程12345let a = 1^2 //3//转换过程//1 -&amp;gt; 01//2 -&amp;g">
-<meta name="keywords" content="算法">
+<meta name="description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
+<meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="只出现一次的数字">
-<meta property="og:url" content="http://yoursite.com/2020/01/10/只出现一次的数字/index.html">
+<meta property="og:title" content="原型的重写">
+<meta property="og:url" content="http://yoursite.com/2020/01/20/原型的重写/index.html">
 <meta property="og:site_name" content="Sora">
-<meta property="og:description" content="题目描述给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素 示例1：12输入：[2,2,1]输出：1 解法看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。 异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程12345let a = 1^2 //3//转换过程//1 -&amp;gt; 01//2 -&amp;g">
+<meta property="og:description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-01-10T07:10:20.164Z">
+<meta property="og:updated_time" content="2020-01-20T12:06:51.364Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="只出现一次的数字">
-<meta name="twitter:description" content="题目描述给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素 示例1：12输入：[2,2,1]输出：1 解法看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。 异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程12345let a = 1^2 //3//转换过程//1 -&amp;gt; 01//2 -&amp;g">
+<meta name="twitter:title" content="原型的重写">
+<meta name="twitter:description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/10/只出现一次的数字/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/20/原型的重写/"/>
 
 
 
 
 
-  <title>只出现一次的数字 | Sora</title>
+  <title>原型的重写 | Sora</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/只出现一次的数字/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/原型的重写/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sora">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">只出现一次的数字</h1>
+          <h1 class="post-title" itemprop="name headline">原型的重写</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-10T15:09:50+08:00">
-                2020-01-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-20T20:06:30+08:00">
+                2020-01-20
               </time>
             
 
@@ -320,12 +320,16 @@
       
 
       
-        <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素</p>
-<p>示例1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[2,2,1]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure></p>
-<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><p>看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。</p>
-<p>异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let a = 1^2 //3</span><br><span class="line">//转换过程</span><br><span class="line">//1 -&gt; 01</span><br><span class="line">//2 -&gt; 10</span><br><span class="line">//1^2 -&gt; 11 -&gt;3</span><br></pre></td></tr></table></figure></p>
-<p>关于异或这种解法，首先有几个数学知识要掌握：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 交换律：a^b^c &lt;=&gt; a^c^b</span><br><span class="line">2. 任何数异或0为任何数：n^0 &lt;=&gt; n</span><br><span class="line">3. 相同数异或为0: n^n</span><br></pre></td></tr></table></figure></p>
-<p>掌握了这些知识，这道题就迎刃而解了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var singleNumber = function(nums) &#123;</span><br><span class="line">    let res = 0;    //0与任何数异或为任何数</span><br><span class="line">    for(let i = 0;i&lt;nums.length;i++)&#123;</span><br><span class="line">        res^=nums[i]; //如果之后出现相同的数结果就会为0，继续进行异或操作</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+        <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。</p>
+<h4 id="通过例子来理解"><a href="#通过例子来理解" class="headerlink" title="通过例子来理解"></a>通过例子来理解</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//例子1</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">//person.name --&gt; sora</span><br></pre></td></tr></table></figure>
+<p>这和上一篇文章的例子相同。那我们换一种写法，看看输出什么结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//例子2</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype.name = &apos;yangning&apos;</span><br><span class="line">//person.name --&gt; yangning</span><br></pre></td></tr></table></figure></p>
+<p>只是换了种写法，就输出了截然不同的结果。为什么呢？其实很好理解，我们作以下区分</p>
+<p><strong>person.prototype.name是修改原有原型的属性，而下面的那种写法，是把它的原型整个换掉，换了个新对象</strong>。<br>上面的例子我们很好理解，那么：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//例子3</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">    name:&apos;yangning&apos;</span><br><span class="line">&#125;</span><br><span class="line">//person.name --&gt;sora</span><br><span class="line">//Person.prototype说：我不干了，我要换一个指向空间，可是此时__proto__还坚守在原地，并没有改变</span><br></pre></td></tr></table></figure></p>
+<p>好了，接下来我们再变一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//例子4</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">     name:&apos;yangning&apos;</span><br><span class="line"> &#125;</span><br><span class="line"> var person = new Person();</span><br><span class="line">//peron.name --&gt; yangning</span><br></pre></td></tr></table></figure></p>
+<p>这里要考虑语句执行顺序问题。考虑预编译环节，第二行代码的声明会提升到最上面。最后一行new了一个新的对象，new的时候函数才会出现第三行代码的变化。所以第四行其实是覆盖掉了第一行代码。而上个例子。person已经被生成了。<strong>其实就是生成实例前修改原型和生成实例后修改原型的区别。</strong></p>
+<blockquote>
+<p>重写原型对象切断了现有原型和任何之前已经存在的对象实例的关系，它们引用的还是最初的原型。参见上面的例子3</p>
+</blockquote>
 
       
     </div>
@@ -343,7 +347,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           
         </div>
       
@@ -356,8 +360,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/09/域名收敛和域名发散/" rel="next" title="域名收敛和域名发散">
-                <i class="fa fa-chevron-left"></i> 域名收敛和域名发散
+              <a href="/2020/01/20/prototype和-proto/" rel="next" title="prototype和__proto__">
+                <i class="fa fa-chevron-left"></i> prototype和__proto__
               </a>
             
           </div>
@@ -365,10 +369,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/15/原生JS实现AJAX详解/" rel="prev" title="原生JS实现AJAX详解">
-                原生JS实现AJAX详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -491,7 +491,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解法"><span class="nav-number">2.</span> <span class="nav-text">解法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过例子来理解"><span class="nav-number">2.</span> <span class="nav-text">通过例子来理解</span></a></li></ol></div>
             
 
           </div>
