@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="前端性能优化," />
+  <meta name="keywords" content="JavaScript," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="写在前面今天在学习过程中看到一个名词：域名收敛。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！ 域名发散由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：  http静态资源采用多个">
-<meta name="keywords" content="前端性能优化">
+<meta name="description" content="typeof我们可以利用typeof来判断number,string,object,boolean,function,undefined,symbol这7种类型。但typeof在判断一个object的数据时候只能判断这个数据是object12345let s1 = new String(&amp;apos;abc&amp;apos;)console.log(typeof(s1)) //object//不过以字面量">
+<meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="域名收敛和域名发散">
-<meta property="og:url" content="http://yoursite.com/2020/01/09/域名收敛和域名发散/index.html">
+<meta property="og:title" content="typeof和instanceof">
+<meta property="og:url" content="http://yoursite.com/2020/01/21/typeof和instanceof/index.html">
 <meta property="og:site_name" content="Sora">
-<meta property="og:description" content="写在前面今天在学习过程中看到一个名词：域名收敛。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！ 域名发散由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：  http静态资源采用多个">
+<meta property="og:description" content="typeof我们可以利用typeof来判断number,string,object,boolean,function,undefined,symbol这7种类型。但typeof在判断一个object的数据时候只能判断这个数据是object12345let s1 = new String(&amp;apos;abc&amp;apos;)console.log(typeof(s1)) //object//不过以字面量">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-01-09T06:52:57.359Z">
+<meta property="og:updated_time" content="2020-01-21T14:49:05.083Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="域名收敛和域名发散">
-<meta name="twitter:description" content="写在前面今天在学习过程中看到一个名词：域名收敛。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！ 域名发散由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：  http静态资源采用多个">
+<meta name="twitter:title" content="typeof和instanceof">
+<meta name="twitter:description" content="typeof我们可以利用typeof来判断number,string,object,boolean,function,undefined,symbol这7种类型。但typeof在判断一个object的数据时候只能判断这个数据是object12345let s1 = new String(&amp;apos;abc&amp;apos;)console.log(typeof(s1)) //object//不过以字面量">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/09/域名收敛和域名发散/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/21/typeof和instanceof/"/>
 
 
 
 
 
-  <title>域名收敛和域名发散 | Sora</title>
+  <title>typeof和instanceof | Sora</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/09/域名收敛和域名发散/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/21/typeof和instanceof/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sora">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">域名收敛和域名发散</h1>
+          <h1 class="post-title" itemprop="name headline">typeof和instanceof</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-09T14:52:21+08:00">
-                2020-01-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-21T22:48:43+08:00">
+                2020-01-21
               </time>
             
 
@@ -320,23 +320,18 @@
       
 
       
-        <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>今天在学习过程中看到一个名词：<strong>域名收敛</strong>。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！</p>
-<h4 id="域名发散"><a href="#域名发散" class="headerlink" title="域名发散"></a>域名发散</h4><p>由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：</p>
+        <h4 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h4><p>我们可以利用<code>typeof</code>来判断<code>number</code>,<code>string</code>,<code>object</code>,<code>boolean</code>,<code>function</code>,<code>undefined</code>,<code>symbol</code>这7种类型。但<code>typeof</code>在判断一个<code>object</code>的数据时候只能判断这个数据是<code>object</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let s1 = new String(&apos;abc&apos;)</span><br><span class="line">console.log(typeof(s1)) //object</span><br><span class="line">//不过以字面量形式创建是可以判断的</span><br><span class="line">let s2 = &apos;abc&apos;</span><br><span class="line">console.log(s2) //string</span><br></pre></td></tr></table></figure></p>
+<h4 id="instanceof-实现原理"><a href="#instanceof-实现原理" class="headerlink" title="instanceof 实现原理"></a>instanceof 实现原理</h4><p><code>instanceof</code>的主要作用是判断一个实例是否属于某种类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let person = function()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">let sora = new person()</span><br><span class="line">sora instanceof person //true</span><br></pre></td></tr></table></figure></p>
+<p><strong>instance的主要实现原理就是只要右边变量的prototype在左边变量的原型链上即可。所以instance在查找过程中会遍历左边变量的原型链，找到即返回true，失败则会返回false</strong>，告诉我们左边变量不是右边变量的实例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//代码实现</span><br><span class="line">function myInstanceOf(left,right)&#123;</span><br><span class="line">    //null是原型链的终点</span><br><span class="line">    //null instanceof Object --&gt;false</span><br><span class="line">    if(left == null)&#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    let rightPrototype = right.prototype;</span><br><span class="line">    let leftProto = left.__proto__;</span><br><span class="line">    if(leftProto == rightPrototype)&#123;</span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是<code>instanceof</code>也并不是最准确的判断方法,比如一个数组，也可以被判定为Object类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1,2,3] instanceof Object //true</span><br><span class="line">[1,2,3] instanceof Array // true</span><br></pre></td></tr></table></figure></p>
+<p>同样字符串也是。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let str = new String(&apos;123&apos;);</span><br><span class="line">str instanceof Object //true</span><br><span class="line">str instanceof String //true</span><br></pre></td></tr></table></figure></p>
+<h4 id="一个更准确的判断方法"><a href="#一个更准确的判断方法" class="headerlink" title="一个更准确的判断方法"></a>一个更准确的判断方法</h4><p>以上两种方法并不是最准确的判断变量类型的方法，下面介绍一种JS中较为准确的类型判断方法<code>Object.prototype.toString.call</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Object.prototype.toString.call(1) // &quot;[object Number]&quot;</span><br><span class="line"></span><br><span class="line">Object.prototype.toString.call(&apos;hi&apos;) // &quot;[object String]&quot;</span><br><span class="line"></span><br><span class="line">Object.prototype.toString.call(&#123;a:&apos;hi&apos;&#125;) // &quot;[object Object]&quot;</span><br><span class="line"></span><br><span class="line">Object.prototype.toString.call([1,&apos;a&apos;]) // &quot;[object Array]&quot;</span><br><span class="line"></span><br><span class="line">Object.prototype.toString.call(true) // &quot;[object Boolean]&quot;</span><br><span class="line"></span><br><span class="line">Object.prototype.toString.call(() =&gt; &#123;&#125;) // &quot;[object Function]&quot;</span><br><span class="line"></span><br><span class="line">Object.prototype.toString.call(null) // &quot;[object Null]&quot;</span><br><span class="line"></span><br><span class="line">Object.prototype.toString.call(undefined) // &quot;[object Undefined]&quot;</span><br><span class="line"></span><br><span class="line">Object.prototype.toString.call(Symbol(1)) // &quot;[object Symbol]&quot;</span><br></pre></td></tr></table></figure></p>
+<h4 id="null"><a href="#null" class="headerlink" title="null"></a>null</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typeof null //Object</span><br><span class="line">null instanceof Object  //false</span><br><span class="line">null instanceof null    //typeError</span><br><span class="line">Object.prototype.toString.call(null) // [object Null]</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>http静态资源采用多个子域名</p>
+<p>null有时会被当成一种对象类型，但是这是语言本身的bug，实际上，null是基本类型</p>
 </blockquote>
-<p>目的是充分利用现代浏览器的<strong>多线程并发下载能力</strong>。所以PC时代对静态资源优化时，通常将静态资源分布在几个不同域，保证资源最完美地分域名存储。</p>
-<h4 id="域名收敛"><a href="#域名收敛" class="headerlink" title="域名收敛"></a>域名收敛</h4><p>域名收敛就是建议将静态资源只放在一个域名下面，而非发散情况下的多个域名下。可是上面说了，域名发散可以提高并发下载能力，为什么这里又提倡域名收敛？是因为域名发散是PC时代的产物，对于PC上的DNS通常情况下就是几十ms，因为PC可以存储很多的域名地址。但现在进入移动互联网时代，对于手机端来说，一般在手机端解析DNS会到1s+，首屏的3s的最佳时间，已经没了1/3.</p>
-<p>所以一般来说，<strong>在手机端上的域名数不能超过5个</strong>。基本的分配就是</p>
-<p>HTML +1</p>
-<p>CSS +1</p>
-<p>img +1</p>
-<p>JS +1</p>
-<p>fonts +1</p>
-<p>不过也得看具体应用场景</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>DNS解析是一个很复杂的过程，在PC上，我们采用域名发散策略，是因为在PC端上，DNS解析通常只需要几十ms。而移动端，2G网络，3G网络，4G网络/wifi强网，DNS的消耗相当可观。在增加域的同时，往往会给浏览器带来DNS解析的开销。所以在这种情况下，提出了域名收敛，减少域名数量可以降低DNS解析的成本。</p>
-<p>传送门一：<a href="https://segmentfault.com/a/1190000004641599" target="_blank" rel="noopener">域名收敛–前端优化(二)</a></p>
-<p>传送门二：<a href="https://www.cnblogs.com/coco1s/p/5365179.html" target="_blank" rel="noopener">【前端性能】浅谈域名发散与域名收敛</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>简单来说，我们使用<code>typeof</code>来判断基本数据类型是ok 的，不过需要注意当用<code>typeof</code>来判断 null 类型时的问题，如果想要判断一个对象的具体类型可以考虑用<code>instanceof</code>，但是<code>instanceof</code> 也可能判断不准确，比如一个数组，他可以被<code>instanceof</code> 判断为 Object。所以我们要想比较准确的判断对象实例的类型时，可以采取<code>Object.prototype.toString.call</code> 方法。</p>
+<p><a href="https://juejin.im/post/5b0b9b9051882515773ae714" target="_blank" rel="noopener">参考博客：浅谈instanceof和typeof的实现原理</a></p>
 
       
     </div>
@@ -354,7 +349,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前端性能优化/" rel="tag"># 前端性能优化</a>
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           
         </div>
       
@@ -367,8 +362,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/04/把一个对象拆分成多个对象/" rel="next" title="把一个对象拆分成多个对象">
-                <i class="fa fa-chevron-left"></i> 把一个对象拆分成多个对象
+              <a href="/2020/01/20/原型的重写/" rel="next" title="原型的重写">
+                <i class="fa fa-chevron-left"></i> 原型的重写
               </a>
             
           </div>
@@ -376,10 +371,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/10/只出现一次的数字/" rel="prev" title="只出现一次的数字">
-                只出现一次的数字 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -502,7 +493,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#域名发散"><span class="nav-number">2.</span> <span class="nav-text">域名发散</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#域名收敛"><span class="nav-number">3.</span> <span class="nav-text">域名收敛</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#typeof"><span class="nav-number">1.</span> <span class="nav-text">typeof</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#instanceof-实现原理"><span class="nav-number">2.</span> <span class="nav-text">instanceof 实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一个更准确的判断方法"><span class="nav-number">3.</span> <span class="nav-text">一个更准确的判断方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">null</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
