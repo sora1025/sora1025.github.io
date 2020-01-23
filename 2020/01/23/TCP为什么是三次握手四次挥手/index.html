@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript," />
+  <meta name="keywords" content="计算机网络," />
 
 
 
@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
-<meta name="keywords" content="JavaScript">
+<meta name="description" content="一、写在前面关于三次握手的问题，我看了很多博客，但是说法不一，谢希仁著《计算机网络》第四版中，讲“三次握手”的目的是：  防止已失效的连接请求报文段又传送到服务器端，造成资源的浪费。  但实际上，这个只能算表因，并不涉及本质。 二、TCP三次握手过程TCP报文格式 字段含义    字段名 含义 作用     Seq 序列号 用来标识从TCP源端向目的端发送的字节流   ack 确认号 只有Ack标">
+<meta name="keywords" content="计算机网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="原型的重写">
-<meta property="og:url" content="http://yoursite.com/2020/01/20/原型的重写/index.html">
+<meta property="og:title" content="TCP为什么是三次握手四次挥手">
+<meta property="og:url" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/index.html">
 <meta property="og:site_name" content="Sora">
-<meta property="og:description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
+<meta property="og:description" content="一、写在前面关于三次握手的问题，我看了很多博客，但是说法不一，谢希仁著《计算机网络》第四版中，讲“三次握手”的目的是：  防止已失效的连接请求报文段又传送到服务器端，造成资源的浪费。  但实际上，这个只能算表因，并不涉及本质。 二、TCP三次握手过程TCP报文格式 字段含义    字段名 含义 作用     Seq 序列号 用来标识从TCP源端向目的端发送的字节流   ack 确认号 只有Ack标">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-01-20T12:06:51.364Z">
+<meta property="og:image" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/img/TCP连接/TCP报文格式.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/img/TCP连接/TCP三次握手过程.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/img/TCP连接/TCP四次挥手过程.png">
+<meta property="og:updated_time" content="2020-01-23T11:27:46.744Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="原型的重写">
-<meta name="twitter:description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
+<meta name="twitter:title" content="TCP为什么是三次握手四次挥手">
+<meta name="twitter:description" content="一、写在前面关于三次握手的问题，我看了很多博客，但是说法不一，谢希仁著《计算机网络》第四版中，讲“三次握手”的目的是：  防止已失效的连接请求报文段又传送到服务器端，造成资源的浪费。  但实际上，这个只能算表因，并不涉及本质。 二、TCP三次握手过程TCP报文格式 字段含义    字段名 含义 作用     Seq 序列号 用来标识从TCP源端向目的端发送的字节流   ack 确认号 只有Ack标">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/img/TCP连接/TCP报文格式.png">
 
 
 
@@ -120,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/20/原型的重写/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/"/>
 
 
 
 
 
-  <title>原型的重写 | Sora</title>
+  <title>TCP为什么是三次握手四次挥手 | Sora</title>
   
 
 
@@ -253,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/原型的重写/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sora">
@@ -270,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">原型的重写</h1>
+          <h1 class="post-title" itemprop="name headline">TCP为什么是三次握手四次挥手</h1>
         
 
         <div class="post-meta">
@@ -282,8 +286,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-20T20:06:30+08:00">
-                2020-01-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-23T19:25:14+08:00">
+                2020-01-23
               </time>
             
 
@@ -320,16 +324,87 @@
       
 
       
-        <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。</p>
-<h4 id="通过例子来理解"><a href="#通过例子来理解" class="headerlink" title="通过例子来理解"></a>通过例子来理解</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//例子1</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">//person.name --&gt; sora</span><br></pre></td></tr></table></figure>
-<p>这和上一篇文章的例子相同。那我们换一种写法，看看输出什么结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//例子2</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype.name = &apos;yangning&apos;</span><br><span class="line">//person.name --&gt; yangning</span><br></pre></td></tr></table></figure></p>
-<p>只是换了种写法，就输出了截然不同的结果。为什么呢？其实很好理解，我们作以下区分</p>
-<p><strong>person.prototype.name是修改原有原型的属性，而下面的那种写法，是把它的原型整个换掉，换了个新对象</strong>。<br>上面的例子我们很好理解，那么：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//例子3</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">    name:&apos;yangning&apos;</span><br><span class="line">&#125;</span><br><span class="line">//person.name --&gt;sora</span><br><span class="line">//Person.prototype说：我不干了，我要换一个指向空间，可是此时__proto__还坚守在原地，并没有改变</span><br></pre></td></tr></table></figure></p>
-<p>好了，接下来我们再变一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//例子4</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">     name:&apos;yangning&apos;</span><br><span class="line"> &#125;</span><br><span class="line"> var person = new Person();</span><br><span class="line">//peron.name --&gt; yangning</span><br></pre></td></tr></table></figure></p>
-<p>这里要考虑语句执行顺序问题。考虑预编译环节，第二行代码的声明会提升到最上面。最后一行new了一个新的对象，new的时候函数才会出现第三行代码的变化。所以第四行其实是覆盖掉了第一行代码。而上个例子。person已经被生成了。<strong>其实就是生成实例前修改原型和生成实例后修改原型的区别。</strong></p>
+        <h4 id="一、写在前面"><a href="#一、写在前面" class="headerlink" title="一、写在前面"></a>一、写在前面</h4><p>关于三次握手的问题，我看了很多博客，但是说法不一，谢希仁著《计算机网络》第四版中，讲“三次握手”的目的是：</p>
 <blockquote>
-<p>重写原型对象切断了现有原型和任何之前已经存在的对象实例的关系，它们引用的还是最初的原型。参见上面的例子3</p>
+<p>防止已失效的连接请求报文段又传送到服务器端，造成资源的浪费。</p>
 </blockquote>
+<p>但实际上，这个只能算表因，并不涉及本质。</p>
+<h4 id="二、TCP三次握手过程"><a href="#二、TCP三次握手过程" class="headerlink" title="二、TCP三次握手过程"></a>二、TCP三次握手过程</h4><p><strong>TCP报文格式</strong><br><img src="./img/TCP连接/TCP报文格式.png" alt=""></p>
+<p><strong>字段含义</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>含义</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seq</td>
+<td>序列号</td>
+<td>用来标识从TCP源端向目的端发送的字节流</td>
+</tr>
+<tr>
+<td>ack</td>
+<td>确认号</td>
+<td>只有Ack标志位为1时，确认序号字段才有效。ack = Seq + 1，若同意连接，则响应报文中应该使SYN=1，ACK=1</td>
+</tr>
+<tr>
+<td>SYN</td>
+<td>标志位</td>
+<td>在连接建立时用来同步序号。当SYN=1，ACK=0，表明是连接请求报文</td>
+</tr>
+<tr>
+<td>FIN</td>
+<td>标志位</td>
+<td>释放一个新连接,当FIN=1,表明此报文的发送方数据已经发送完毕</td>
+</tr>
+<tr>
+<td>RST</td>
+<td>标志位</td>
+<td>重置连接</td>
+</tr>
+<tr>
+<td>ACK</td>
+<td>标志位</td>
+<td>仅当ACK=1时，确认号字段才有效</td>
+</tr>
+<tr>
+<td>URG</td>
+<td>标志位</td>
+<td>表明紧急指针有效，告诉系统此报文段中有紧急数据</td>
+</tr>
+<tr>
+<td>PSH</td>
+<td>标志位</td>
+<td>接收方应该尽快将这个报文交给应用层</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>不要将确认序号ack与标志位中的ACK搞混</li>
+<li>确认方Ack=发起方Seq+1，两端配对</li>
+</ol>
+</blockquote>
+<p><strong>三次握手过程</strong><br><img src="./img/TCP连接/TCP三次握手过程.png" alt=""></p>
+<h4 id="三、为什么TCP需要握手这个操作"><a href="#三、为什么TCP需要握手这个操作" class="headerlink" title="三、为什么TCP需要握手这个操作"></a>三、为什么TCP需要握手这个操作</h4><p>在解答为什么TCP需要三次握手，而不是两次之前，首先需要回答的问题是：<strong>为什么需要握手这个操作，能不能不握手？</strong></p>
+<p>这里引出了TCP和UDP的一个基本区别：TCP是可靠通信协议，而UDP是不可靠通信协议。</p>
+<ul>
+<li>TCP的可靠性含义：接收方收到的数是<strong>完整</strong>、<strong>有序</strong>、<strong>无差错</strong>的。</li>
+<li>UDP不可靠性含义：接收方接收到的数据可能存在部分丢失，顺序也不一定能保证。</li>
+</ul>
+<p><strong>TCP可靠传输的精髓</strong></p>
+<p>TCP协议为了实现可靠传输，通信双方需要判断自己已经发送的数据包是否都被接收方收到，如果没收到，就需要重新发送。因此，为了实现这个需求。就引出<strong>序号Seq</strong>和<strong>确认号Ack</strong>的使用。</p>
+<p>发送方在发送数据包(假设大小为10byte)，同时会发送一个<strong>序列号</strong>(假设为500)，那么接收方收到这个数据包以后，就回复一个<strong>确认号</strong>(500+10=510),告诉发送方：“我已经收到了你的数据包，你可以发送下一个数据包，序号从510开始。”</p>
+<p>这样发送方就可以知道哪些数据被接收到，哪些数据没被接收到，需要重发。</p>
+<h4 id="四、为什么TCP是三次握手？"><a href="#四、为什么TCP是三次握手？" class="headerlink" title="四、为什么TCP是三次握手？"></a>四、为什么TCP是三次握手？</h4><p>总结上文内容，一句话概括，<strong>TCP连接握手，握的是什么？</strong></p>
+<p><strong>是通信双方数据原点的序列号！</strong></p>
+<h4 id="五、为什么TCP是四次挥手"><a href="#五、为什么TCP是四次挥手" class="headerlink" title="五、为什么TCP是四次挥手"></a>五、为什么TCP是四次挥手</h4><p>因为服务端在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和FIN放在一个报文中发送给客户端。而关闭连接时，当收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据。此时，服务端也未必将全部数据都发送给对方了。所以我们可以不必立即close，也可以发送一些数据，再发送FIN报文给对方来表示同意现在关闭连接。所以在关闭连接时，FIN和ACK是分开发送的。<br><img src="./img/TCP连接/TCP四次挥手过程.png" alt=""></p>
+<p><a href="https://www.zhihu.com/question/24853633" target="_blank" rel="noopener">参考的是知乎的回答</a></p>
+<p>图源自网络，侵删道歉</p>
 
       
     </div>
@@ -347,7 +422,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
           
         </div>
       
@@ -360,8 +435,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/20/prototype和-proto/" rel="next" title="prototype和__proto__">
-                <i class="fa fa-chevron-left"></i> prototype和__proto__
+              <a href="/2020/01/21/typeof和instanceof/" rel="next" title="typeof和instanceof">
+                <i class="fa fa-chevron-left"></i> typeof和instanceof
               </a>
             
           </div>
@@ -369,10 +444,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/21/typeof和instanceof/" rel="prev" title="typeof和instanceof">
-                typeof和instanceof <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -495,7 +566,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过例子来理解"><span class="nav-number">2.</span> <span class="nav-text">通过例子来理解</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、写在前面"><span class="nav-number">1.</span> <span class="nav-text">一、写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、TCP三次握手过程"><span class="nav-number">2.</span> <span class="nav-text">二、TCP三次握手过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、为什么TCP需要握手这个操作"><span class="nav-number">3.</span> <span class="nav-text">三、为什么TCP需要握手这个操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、为什么TCP是三次握手？"><span class="nav-number">4.</span> <span class="nav-text">四、为什么TCP是三次握手？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、为什么TCP是四次挥手"><span class="nav-number">5.</span> <span class="nav-text">五、为什么TCP是四次挥手</span></a></li></ol></div>
             
 
           </div>
