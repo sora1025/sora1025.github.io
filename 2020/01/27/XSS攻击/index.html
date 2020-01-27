@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript," />
+  <meta name="keywords" content="网络安全," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
-<meta name="keywords" content="JavaScript">
+<meta name="description" content="一、什么是XSS？XSS全称是Cross Site Scripting即跨站脚本，XSS攻击通常指通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令到页面，使用户加载并执行攻击者恶意制造的网页程序。 二、危害 盗取各类用户账号 读取、篡改、添加、删除敏感数据 盗取资料 非法转账 强制发送电子邮件  三、XSS类型 持久型跨站  持久型XSS，也叫存储型XSS，主要是将XSS代码发送到服务器。">
+<meta name="keywords" content="网络安全">
 <meta property="og:type" content="article">
-<meta property="og:title" content="原型的重写">
-<meta property="og:url" content="http://yoursite.com/2020/01/20/原型的重写/index.html">
+<meta property="og:title" content="XSS攻击">
+<meta property="og:url" content="http://yoursite.com/2020/01/27/XSS攻击/index.html">
 <meta property="og:site_name" content="Sora">
-<meta property="og:description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
+<meta property="og:description" content="一、什么是XSS？XSS全称是Cross Site Scripting即跨站脚本，XSS攻击通常指通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令到页面，使用户加载并执行攻击者恶意制造的网页程序。 二、危害 盗取各类用户账号 读取、篡改、添加、删除敏感数据 盗取资料 非法转账 强制发送电子邮件  三、XSS类型 持久型跨站  持久型XSS，也叫存储型XSS，主要是将XSS代码发送到服务器。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-01-20T12:06:51.364Z">
+<meta property="og:updated_time" content="2020-01-27T10:30:07.209Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="原型的重写">
-<meta name="twitter:description" content="写在前面上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。 通过例子来理解12345678//例子1Person.prototype.name = &amp;apos;sora&amp;apos;;function Person()&amp;#123;    &amp;#125;var person = new Person();Person.prototype.name = &amp;apos;sora&amp;apos;;/">
+<meta name="twitter:title" content="XSS攻击">
+<meta name="twitter:description" content="一、什么是XSS？XSS全称是Cross Site Scripting即跨站脚本，XSS攻击通常指通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令到页面，使用户加载并执行攻击者恶意制造的网页程序。 二、危害 盗取各类用户账号 读取、篡改、添加、删除敏感数据 盗取资料 非法转账 强制发送电子邮件  三、XSS类型 持久型跨站  持久型XSS，也叫存储型XSS，主要是将XSS代码发送到服务器。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/20/原型的重写/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/27/XSS攻击/"/>
 
 
 
 
 
-  <title>原型的重写 | Sora</title>
+  <title>XSS攻击 | Sora</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/原型的重写/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/XSS攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sora">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">原型的重写</h1>
+          <h1 class="post-title" itemprop="name headline">XSS攻击</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-20T20:06:30+08:00">
-                2020-01-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-27T18:29:50+08:00">
+                2020-01-27
               </time>
             
 
@@ -320,16 +320,43 @@
       
 
       
-        <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>上一篇文章讲了原型和原型链的基础知识，这篇文章我们学习原型的重写。</p>
-<h4 id="通过例子来理解"><a href="#通过例子来理解" class="headerlink" title="通过例子来理解"></a>通过例子来理解</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//例子1</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">//person.name --&gt; sora</span><br></pre></td></tr></table></figure>
-<p>这和上一篇文章的例子相同。那我们换一种写法，看看输出什么结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//例子2</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype.name = &apos;yangning&apos;</span><br><span class="line">//person.name --&gt; yangning</span><br></pre></td></tr></table></figure></p>
-<p>只是换了种写法，就输出了截然不同的结果。为什么呢？其实很好理解，我们作以下区分</p>
-<p><strong>person.prototype.name是修改原有原型的属性，而下面的那种写法，是把它的原型整个换掉，换了个新对象</strong>。<br>上面的例子我们很好理解，那么：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//例子3</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">    name:&apos;yangning&apos;</span><br><span class="line">&#125;</span><br><span class="line">//person.name --&gt;sora</span><br><span class="line">//Person.prototype说：我不干了，我要换一个指向空间，可是此时__proto__还坚守在原地，并没有改变</span><br></pre></td></tr></table></figure></p>
-<p>好了，接下来我们再变一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//例子4</span><br><span class="line">Person.prototype.name = &apos;sora&apos;;</span><br><span class="line">function Person()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">     name:&apos;yangning&apos;</span><br><span class="line"> &#125;</span><br><span class="line"> var person = new Person();</span><br><span class="line">//peron.name --&gt; yangning</span><br></pre></td></tr></table></figure></p>
-<p>这里要考虑语句执行顺序问题。考虑预编译环节，第二行代码的声明会提升到最上面。最后一行new了一个新的对象，new的时候函数才会出现第三行代码的变化。所以第四行其实是覆盖掉了第一行代码。而上个例子。person已经被生成了。<strong>其实就是生成实例前修改原型和生成实例后修改原型的区别。</strong></p>
-<blockquote>
-<p>重写原型对象切断了现有原型和任何之前已经存在的对象实例的关系，它们引用的还是最初的原型。参见上面的例子3</p>
-</blockquote>
+        <h4 id="一、什么是XSS？"><a href="#一、什么是XSS？" class="headerlink" title="一、什么是XSS？"></a>一、什么是XSS？</h4><p>XSS全称是Cross Site Scripting即跨站脚本，XSS攻击通常指通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令到页面，使用户<strong>加载并执行攻击者恶意制造的网页程序</strong>。</p>
+<h4 id="二、危害"><a href="#二、危害" class="headerlink" title="二、危害"></a>二、危害</h4><ol>
+<li>盗取各类用户账号</li>
+<li>读取、篡改、添加、删除敏感数据</li>
+<li>盗取资料</li>
+<li>非法转账</li>
+<li>强制发送电子邮件</li>
+</ol>
+<h4 id="三、XSS类型"><a href="#三、XSS类型" class="headerlink" title="三、XSS类型"></a>三、XSS类型</h4><ol>
+<li><strong>持久型跨站</strong></li>
+</ol>
+<p>持久型XSS，也叫存储型XSS，主要是将XSS代码发送到服务器。最典型的案例是留言板XSS。</p>
+<p>用户提交一条包含XSS代码的留言到数据库，当目标用户查看留言板时，留言内容会从数据库查询出来并展示，浏览器发现有XSS代码，会当作正常的HTML与JS解析执行，触发XSS攻击。</p>
+<ol start="2">
+<li><strong>非持久型跨站</strong></li>
+</ol>
+<p>非持久型XSS，也叫反射型XSS，是指发生请求时，XSS代码出现在请求URL中，作为参数提交到服务器，服务器解析并响应。响应结果中包含XSS代码，最后浏览器解析并执行。</p>
+<p>举个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\\请求URL</span><br><span class="line">http://localhost:8080/helloController/search?name=&lt;script&gt;alert(&quot;hey!&quot;)&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>此时服务器只做了一个简单的字符串连接就返回给客户端,就会执行script代码。</p>
+<h4 id="四、防范手段"><a href="#四、防范手段" class="headerlink" title="四、防范手段"></a>四、防范手段</h4><ol>
+<li><strong>入参字符过滤</strong></li>
+</ol>
+<p>将输入时一些不合法的东西过滤掉，如移除用户上传的style节点，<code>&lt;iframe&gt; &lt;script&gt; &lt;a&gt;</code>节点等。</p>
+<ol start="2">
+<li><strong>出参进行编码</strong></li>
+</ol>
+<p>像一些常见符号，如<code>&lt;&gt;</code>在输出时要对其进行转换编码，这样做浏览器就不会对该标签进行解释执行，同时也不会影响显示效果。</p>
+<p>例如，对<code>&lt;&gt;</code>做编码：<code>&lt;</code>用<code>&amp;lt;</code>，<code>&gt;</code>用<code>&amp;gt;</code>代替。</p>
+<ol start="3">
+<li><strong>入参长度限制</strong></li>
+</ol>
+<p>通过以上的案例我们不难发现XSS攻击要能达成往往需要较长的字符串，因此对于一些可以预期的输入可以通过限制长度强制截断来进行防御。</p>
+<ol start="4">
+<li><strong>设置cookie httponly为true</strong></li>
+</ol>
+<p>参考博客：</p>
+<p><a href="https://www.cnblogs.com/mao2080/p/9460397.html" target="_blank" rel="noopener">网络攻击-XSS攻击详解</a></p>
 
       
     </div>
@@ -347,7 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            <a href="/tags/网络安全/" rel="tag"># 网络安全</a>
           
         </div>
       
@@ -360,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/20/prototype和-proto/" rel="next" title="prototype和__proto__">
-                <i class="fa fa-chevron-left"></i> prototype和__proto__
+              <a href="/2020/01/23/TCP为什么是三次握手四次挥手/" rel="next" title="TCP为什么是三次握手四次挥手">
+                <i class="fa fa-chevron-left"></i> TCP为什么是三次握手四次挥手
               </a>
             
           </div>
@@ -369,10 +396,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/21/typeof和instanceof/" rel="prev" title="typeof和instanceof">
-                typeof和instanceof <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -495,7 +518,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过例子来理解"><span class="nav-number">2.</span> <span class="nav-text">通过例子来理解</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、什么是XSS？"><span class="nav-number">1.</span> <span class="nav-text">一、什么是XSS？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、危害"><span class="nav-number">2.</span> <span class="nav-text">二、危害</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、XSS类型"><span class="nav-number">3.</span> <span class="nav-text">三、XSS类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、防范手段"><span class="nav-number">4.</span> <span class="nav-text">四、防范手段</span></a></li></ol></div>
             
 
           </div>
