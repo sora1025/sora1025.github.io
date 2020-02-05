@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Sora">
 <meta property="og:description" content="一、写在前面这段时间会更新一系列原生JS的知识点，一是巩固基础，二是为了春招做准备。现在回过头看自己以前学习做的笔记，能发现很多错误，一些不懂的地方现在也有新的感悟。所谓温故而知新的道理吧。 二、prototypeprototype是函数对象的一个属性，指向该函数的原型对象。这个属性是一个指针，指向一个对象。这个对象包含所有其实例共享的实例和方法。即上文所说原型对象。 通过这个属性，我们可以实现基">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-01-20T11:47:37.003Z">
+<meta property="og:updated_time" content="2020-02-05T13:48:34.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="prototype和__proto__">
 <meta name="twitter:description" content="一、写在前面这段时间会更新一系列原生JS的知识点，一是巩固基础，二是为了春招做准备。现在回过头看自己以前学习做的笔记，能发现很多错误，一些不懂的地方现在也有新的感悟。所谓温故而知新的道理吧。 二、prototypeprototype是函数对象的一个属性，指向该函数的原型对象。这个属性是一个指针，指向一个对象。这个对象包含所有其实例共享的实例和方法。即上文所说原型对象。 通过这个属性，我们可以实现基">
@@ -342,10 +342,11 @@
 </ol>
 <h4 id="五、当我们在new一个对象时，我们在做什么"><a href="#五、当我们在new一个对象时，我们在做什么" class="headerlink" title="五、当我们在new一个对象时，我们在做什么"></a>五、当我们在new一个对象时，我们在做什么</h4><p>当执行new func的时候，执行过程如下：</p>
 <ol>
-<li>首先创建一个新的对象，<code>obj</code>；</li>
+<li>首先创建一个新的空对象，<code>obj</code></li>
 <li><code>obj.[[prototype]] = func.prototype</code></li>
-<li>令<code>this = obj</code></li>
-<li>如果func的返回值是一个对象，则<code>new</code>的返回值就是这个对象，否则返回值是<code>obj</code></li>
+<li>执行构造函数中的代码，构造函数中的<code>this</code>指向该对象</li>
+<li>返回对象<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//举个例子</span><br><span class="line">var Person = function(name,age)&#123;</span><br><span class="line">    this.name = name;</span><br><span class="line">    this.age = age;</span><br><span class="line">&#125;;</span><br><span class="line">Person.prototype.show = function()&#123;</span><br><span class="line">    console.log(this.name,this.age);</span><br><span class="line">&#125;</span><br><span class="line">var p = new Person(&quot;sora&quot;,20);</span><br><span class="line">//相当于</span><br><span class="line">var p = &#123;&#125;;</span><br><span class="line">p.__proto__ = Person.prototype;</span><br><span class="line">Person.call(p,&quot;sora&quot;,20);</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 
       
