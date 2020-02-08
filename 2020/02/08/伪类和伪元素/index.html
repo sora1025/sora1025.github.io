@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、伪类和伪元素的定义1.伪类CSS3给出的定义是：  伪类存在的意义是为了通过选择器，格式化DOM树以外的信息以及不能被常规CSS选择器获取到的信息。  通过上面的概念我们知道伪类的功能有两种：  格式化DOM树以外的信息，比如&amp;lt;a&amp;gt;标签的:link和:visited等。这些信息不存在于DOM树当中。 不能被常规CSS选择器获取到的信息。比如：要获取第一个子元素，我们无法用常规的CS">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="伪类和伪元素">
+<meta property="og:url" content="http://yoursite.com/2020/02/08/伪类和伪元素/index.html">
+<meta property="og:site_name" content="Sora">
+<meta property="og:description" content="一、伪类和伪元素的定义1.伪类CSS3给出的定义是：  伪类存在的意义是为了通过选择器，格式化DOM树以外的信息以及不能被常规CSS选择器获取到的信息。  通过上面的概念我们知道伪类的功能有两种：  格式化DOM树以外的信息，比如&amp;lt;a&amp;gt;标签的:link和:visited等。这些信息不存在于DOM树当中。 不能被常规CSS选择器获取到的信息。比如：要获取第一个子元素，我们无法用常规的CS">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/伪类和伪元素/img/伪类和伪元素/伪类实例.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/伪类和伪元素/img/伪类和伪元素/伪元素实例.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/伪类和伪元素/img/伪类和伪元素/伪元素实例2.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/伪类和伪元素/img/伪类和伪元素/伪元素控制台.png">
+<meta property="og:updated_time" content="2020-02-08T11:31:55.073Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="伪类和伪元素">
+<meta name="twitter:description" content="一、伪类和伪元素的定义1.伪类CSS3给出的定义是：  伪类存在的意义是为了通过选择器，格式化DOM树以外的信息以及不能被常规CSS选择器获取到的信息。  通过上面的概念我们知道伪类的功能有两种：  格式化DOM树以外的信息，比如&amp;lt;a&amp;gt;标签的:link和:visited等。这些信息不存在于DOM树当中。 不能被常规CSS选择器获取到的信息。比如：要获取第一个子元素，我们无法用常规的CS">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/08/伪类和伪元素/img/伪类和伪元素/伪类实例.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/08/伪类和伪元素/"/>
+
+
+
+
+
+  <title>伪类和伪元素 | Sora</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sora</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/伪类和伪元素/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">伪类和伪元素</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-08T19:28:35+08:00">
+                2020-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="一、伪类和伪元素的定义"><a href="#一、伪类和伪元素的定义" class="headerlink" title="一、伪类和伪元素的定义"></a>一、伪类和伪元素的定义</h4><h5 id="1-伪类"><a href="#1-伪类" class="headerlink" title="1.伪类"></a>1.伪类</h5><p>CSS3给出的定义是：</p>
+<blockquote>
+<p>伪类存在的意义是<strong>为了通过选择器，格式化DOM树以外的信息</strong>以及<strong>不能被常规CSS选择器获取到的信息</strong>。</p>
+</blockquote>
+<p>通过上面的概念我们知道伪类的功能有两种：</p>
+<ol>
+<li>格式化DOM树以外的信息，比如<code>&lt;a&gt;</code>标签的<code>:link</code>和<code>:visited</code>等。这些信息不存在于DOM树当中。</li>
+<li>不能被常规CSS选择器获取到的信息。比如：要获取第一个子元素，我们无法用常规的CSS选择器获取，但可以通过<code>:first-child</code>来获取到。</li>
+</ol>
+<h5 id="2-伪元素"><a href="#2-伪元素" class="headerlink" title="2.伪元素"></a>2.伪元素</h5><p>CSS3给出的定义是:</p>
+<blockquote>
+<p>伪元素可以创建一些文档语言无法创建的虚拟元素。比如：文档语言没有一种机制可以描述元素内容的第一个字母或第一行，但伪元素可以做到(<code>::first-letter、::first-line</code>)。同时，伪元素还可以创建源文档不存在的内容，比如使用<code>::before</code>或<code>::after</code>。</p>
+</blockquote>
+<h4 id="二、伪类和伪元素的区别"><a href="#二、伪类和伪元素的区别" class="headerlink" title="二、伪类和伪元素的区别"></a>二、伪类和伪元素的区别</h4><p>通过上面的概念，我们就可以知道伪类和伪元素最本质的一个区别是：<strong>伪类其实是为了弥补CSS选择器的不足，用来更方便地获取信息。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;li&gt;111&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;222&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//CSS</span><br><span class="line">li:first-child&#123;</span><br><span class="line">      color: red;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="./img/伪类和伪元素/伪类实例.png" alt=""></p>
+<p><strong>而伪元素本质上是创建了一个虚拟容器(元素)，我们可以在其中添加内容或样式。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;p&gt;Hello&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">//CSS</span><br><span class="line">p::first-letter&#123;</span><br><span class="line">      color: red;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="./img/伪类和伪元素/伪元素实例.png" alt=""></p>
+<p>上面的代码其实就相当于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;p&gt;</span><br><span class="line">    &lt;span class=&quot;first-letter&quot;&gt;H&lt;/span&gt;ello</span><br><span class="line">&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">//CSS</span><br><span class="line">.first-letter&#123;</span><br><span class="line">      color: red;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过上面的例子，你就可以理解伪元素本质上是穿件了一个虚拟容器(元素)。</p>
+<p>除了上面这个本质区别以外，在CSS3中，伪类用单冒号:表示；而伪元素用双冒号::表示。一个选择器可以同时使用多个伪类(但有的伪类会互斥)；而一个选择器只能同时使用一个伪元素(未来的版本可能会支持多伪元素)。不过我尝试了一下，可以同时使用::before和::after，读者可以自行尝试。</p>
+<h4 id="三、主要用法"><a href="#三、主要用法" class="headerlink" title="三、主要用法"></a>三、主要用法</h4><h5 id="1-伪类-1"><a href="#1-伪类-1" class="headerlink" title="1.伪类"></a>1.伪类</h5><ul>
+<li><p>:first-child 匹配第一个子元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;li&gt;111&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;222&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">//CSS</span><br><span class="line">li:first-child&#123;</span><br><span class="line">    color:red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>:last-child 匹配最后一个子元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;li&gt;111&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;222&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;333&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">//CSS</span><br><span class="line">li:last-child&#123;</span><br><span class="line">    color:red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>:first-of-type 匹配属于其父元素的第一个特定类型的子元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;h1&gt;h1文本&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;p文本&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">//CSS</span><br><span class="line">p:first-of-type&#123;</span><br><span class="line">    color:red; //&lt;p&gt;标签的内容变为红色</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里有必要强调一下<code>:first-child</code>和<code>:first-of-type的区别</code>。如果你的CSS写成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p:first-child&#123;</span><br><span class="line">    color:red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>页面是不会有变化的，因为</p><p>元素并不是父元素<div>的第一个子元素。</div></p>
+<ul>
+<li>last of type 匹配属于其父元素的最后一个特定类型的子元素<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;h1&gt;h1文本&lt;/h1&gt;</span><br><span class="line">    &lt;h1&gt;h1文本2&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;p文本&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">//CSS</span><br><span class="line">h1:last-of-type&#123;</span><br><span class="line">    color:red; //倒数第一个&lt;h1&gt;标签的内容变为红色</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="2-伪元素-1"><a href="#2-伪元素-1" class="headerlink" title="2.伪元素"></a>2.伪元素</h5><ul>
+<li>::before 在被选元素之前插入内容。需要指定content属性来插入内容。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;p&gt;CSS&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">//CSS</span><br><span class="line">p::before&#123;</span><br><span class="line">    content:&quot;Hi,&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="./img/伪类和伪元素/伪元素实例2.png" alt=""></p>
+<p>可以再打开控制台查看一下：<br><img src="./img/伪类和伪元素/伪元素控制台.png" alt=""></p>
+<ul>
+<li>::after 在被选元素之后插入内容。和::before同理，可以自己动手试一下。</li>
+<li>::first-line 匹配元素中第一行的文本(只能在块元素中使用)</li>
+</ul>
+<p>伪元素和伪类的学习就到这里了，学习CSS的话就是应该多动手尝试一下~</p>
+<p>搬运博客：<a href="https://www.jianshu.com/p/996d021bced3" target="_blank" rel="noopener">我终于理解了伪类和伪元素</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/27/XSS攻击/" rel="next" title="XSS攻击">
+                <i class="fa fa-chevron-left"></i> XSS攻击
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">sora</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、伪类和伪元素的定义"><span class="nav-number">1.</span> <span class="nav-text">一、伪类和伪元素的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-伪类"><span class="nav-number">1.1.</span> <span class="nav-text">1.伪类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-伪元素"><span class="nav-number">1.2.</span> <span class="nav-text">2.伪元素</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、伪类和伪元素的区别"><span class="nav-number">2.</span> <span class="nav-text">二、伪类和伪元素的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、主要用法"><span class="nav-number">3.</span> <span class="nav-text">三、主要用法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-伪类-1"><span class="nav-number">3.1.</span> <span class="nav-text">1.伪类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-伪元素-1"><span class="nav-number">3.2.</span> <span class="nav-text">2.伪元素</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sora</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -249,6 +249,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/25/深入理解闭包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/25/深入理解闭包/" itemprop="url">深入理解闭包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-25T20:13:08+08:00">
+                2019-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>最近买了本新书，《你不知道的JS》，听说是书中良品，我觉得写得很好，所以这段时间一直在复习回顾知识点，打算在十一结束之前把三本书看完。这里会记下来原来不是很清楚的知识点。</p>
+<h4 id="闭包的定义"><a href="#闭包的定义" class="headerlink" title="闭包的定义"></a>闭包的定义</h4><p>首先来看看书中给的定义：<strong>当函数可以记住并访问所在的词法作用域时，就产生了闭包</strong>。</p>
+<h4 id="闭包的运用"><a href="#闭包的运用" class="headerlink" title="闭包的运用"></a>闭包的运用</h4><p>解决变量的私有化问题.</p>
+<p>下面举个例子说明闭包的实际运用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//计数器 每次调用+1</span><br><span class="line">function add()&#123;</span><br><span class="line">    var counter=0;//局部变量</span><br><span class="line">    counter++;</span><br><span class="line">&#125;</span><br><span class="line">add();//counter 1</span><br><span class="line">add();//counter 1</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var counter=0;//全局变量</span><br><span class="line">function add()&#123;</span><br><span class="line">    counter++;</span><br><span class="line">&#125;</span><br><span class="line">add();//counter 1</span><br><span class="line">add();//counter 2</span><br></pre></td></tr></table></figure>
+<p>改动一下虽然实现了计数器的功能，但是使用全局变量意味着在任何一个地方都可以修改和使用。如果新增一个函数，里面的变量恰好又叫counter，那就全乱套了。</p>
+<blockquote>
+<p>我们引入闭包，使变量既有全局变量的生命周期，又有局部变量的局部私有。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">function add()&#123;</span><br><span class="line">    var counter=0;//局部变量</span><br><span class="line">    function plus()&#123;</span><br><span class="line">        counter++;//全局变量的生命周期；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//下面只要实现调用plus()函数就是可以了</span><br><span class="line"></span><br><span class="line">------------------------我是分隔符-----------------------</span><br><span class="line">//方法一</span><br><span class="line">function add()&#123;</span><br><span class="line">    var counter=0;</span><br><span class="line">    //全局函数</span><br><span class="line">    plus=function()&#123;</span><br><span class="line">        counter++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">add();//初始化counter</span><br><span class="line">plus();</span><br><span class="line">plus();</span><br><span class="line"></span><br><span class="line">//方法二</span><br><span class="line">function add()&#123;</span><br><span class="line">    var counter=0;</span><br><span class="line">    return function()&#123;</span><br><span class="line">        counter++;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">var plus=add();</span><br><span class="line">plus();</span><br><span class="line">plus();</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>我们再来进行优化，我们发现上面的add()函数似乎只是用来初始化counter，没有其他的作用，那么下面我们引入<strong>立即执行函数</strong>。</p>
+<blockquote>
+<p>函数的立即执行：函数声明和函数执行放在一起。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//(add)()</span><br><span class="line"></span><br><span class="line">var plus = (function /*add*/()&#123;</span><br><span class="line">    var counter=0;</span><br><span class="line">    return function()&#123;</span><br><span class="line">        counter++;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line">//写/*add*/是想说明这里可以去掉，但是为了和上面的代码进行对比，比较容易看懂，我在这里保留</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="循环与闭包"><a href="#循环与闭包" class="headerlink" title="循环与闭包"></a>循环与闭包</h4><p>我们先上一个栗子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for(var i=1;i&lt;=5;i++)&#123;</span><br><span class="line">    setTimeout(function timer()&#123;</span><br><span class="line">        console.log(i);</span><br><span class="line">    &#125;,i*1000);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们写这段代码的本意是让它输出1-5，每秒一次，每次一个数字。而实际上，运行这段代码，会看到终端每秒输出一个6，输出五次。那么，为什么会输出5个6？</p>
+<p>这是首先涉及到延时函数的执行机制。我们来看这段代码：timer()收到命令，1s后执行，在这个过程中，程序不是阻塞的，会先执行for循环代码，也就是等for循环结束后，延时函数才开始执行。循环结束时，此时i=6,所以会打印出5个6。那为什么是5个6呢？for()循环每执行一次就会创建一个延时函数，它们共享一个作用域。</p>
+<p>所以解决方案是：每循环一次，创建一个作用域，立即执行一个延时函数。 我们首先想到的是立即执行函数(IIFE)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for(var i=1;i&lt;=5;i++)&#123;</span><br><span class="line">   (function() &#123;</span><br><span class="line">       setTimeout(function timer()&#123;</span><br><span class="line">        console.log(i);</span><br><span class="line">    &#125;,i*1000);</span><br><span class="line">   &#125;)();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在终端打印出来，发现还是5个6！问题出在哪里？IIFE虽然会创建一个新的作用域，但是它是一个什么都没有的空作用域，所以每次还是会引用处于全局作用域的i。所以它需要有自己的变量，用来在每个迭代中存储i的值，再来改进一下代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for(var i=1;i&lt;=5;i++)&#123;</span><br><span class="line">   (function() &#123;</span><br><span class="line">       var j =i;</span><br><span class="line">       setTimeout(function timer()&#123;</span><br><span class="line">        console.log(j);</span><br><span class="line">    &#125;,j*1000);</span><br><span class="line">   &#125;)();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样在控制台中打印出来的就没问题了。我们可以对这段代码进行进一步的改进：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for(var i=1;i&lt;=5;i++)&#123;</span><br><span class="line">   (function(j) &#123;</span><br><span class="line">       setTimeout(function timer()&#123;</span><br><span class="line">        console.log(j);</span><br><span class="line">    &#125;,j*1000);</span><br><span class="line">   &#125;)(i);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们继续思考，其实解决上述问题的关键在于每次迭代要创建一个新的块作用域。既然如此，ES6中规定的let声明也可以派上用场！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for(let i=1;i&lt;=5;i++)&#123;</span><br><span class="line">    setTimeout(function timer()&#123;</span><br><span class="line">        console.log(i);</span><br><span class="line">    &#125;,i*1000);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>书中说for循环头部的let声明还会有一个特殊的行为。这个行为指出变量在循环过程中不止被声明一次。每次迭代都会声明。随后的每个迭代都会使用上一个迭代结束时的值来初始化这个变量。</p>
+</blockquote>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>当函数可以记住并访问所在的词法作用域，即使函数是在当前词法作用域之外执行，这时候就产生了闭包。</p>
+<p>啊~被这个问题折磨了好久。还有一篇相关好文推荐，面试时候可以看看，tql，<a href="https://zhuanlan.zhihu.com/p/25407758" target="_blank" rel="noopener">闭包面试题</a>。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/16/Promise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1324,7 +1468,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1337,7 +1481,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
