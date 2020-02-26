@@ -249,6 +249,222 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/解决CSS3动画卡顿/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/26/解决CSS3动画卡顿/" itemprop="url">解决CSS3动画卡顿</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-26T20:47:15+08:00">
+                2020-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>最近做的一个小动画，只是简单的文字平移，却出现了卡顿现象，本文内容大部分来源于网上的博客，demo部分则是自己实践的。所以学习前端，实践真的很重要。</p>
+<h4 id="为什么会卡顿？"><a href="#为什么会卡顿？" class="headerlink" title="为什么会卡顿？"></a>为什么会卡顿？</h4><p>浏览器是单线程运行的。所以我们先要明确以下几下概念：单线程，主线程和合成线程。</p>
+<p>一般情况下，主线程：</p>
+<ol>
+<li>运行JavaScript</li>
+<li>计算HTML元素的CSS样式</li>
+<li>页面的布局</li>
+<li>将元素绘制到一个或多个位图中</li>
+<li>将这些位图交给合成线程</li>
+</ol>
+<p>相应地，合成线程负责：</p>
+<ol>
+<li>通过GPU将位图绘制到屏幕上</li>
+<li>通知主线程更新页面中可见或即将变成可见的部分的位图</li>
+<li>计算出页面中哪个部分是可见的</li>
+<li>计算出当你在滚动页面时哪部分是即将变成可见的</li>
+<li>当你滚动页面时将相应位置的元素移动到可视区域</li>
+</ol>
+<h4 id="那么为什么会造成动画卡顿呢？"><a href="#那么为什么会造成动画卡顿呢？" class="headerlink" title="那么为什么会造成动画卡顿呢？"></a>那么为什么会造成动画卡顿呢？</h4><p>原因是主线程和合成线程的调度不合理。</p>
+<p>在使用<code>height</code>,<code>width</code>,<code>margin</code>,<code>padding</code>作为<code>transition</code>的值时，会造成浏览器主线程的工作较重。例如，从<code>margin-left: -20px</code>渲染到<code>margin-left:0</code>,主线程需要计算样式<code>margin-left:19px</code>,<code>margin-left:-18px</code>…一直到<code>margin-left:0</code>,而且每一次主线程计算样式后，合成进程都需要绘制到GPU然后渲染到屏幕上，前后总共进行20次主线程渲染，20次合成进程渲染，20次+20次，总共40次计算。</p>
+<p>主线程的渲染流程，可以参考浏览器渲染网页的流程：</p>
+<blockquote>
+<ol>
+<li>使用 HTML 创建文档对象模型（DOM）</li>
+<li>使用 CSS 创建 CSS 对象模型（CSSOM）</li>
+<li><strong>基于 DOM 和 CSSOM 执行脚本（Scripts）</strong></li>
+<li><strong>合并 DOM 和 CSSOM 形成渲染树（Render Tree）</strong></li>
+<li><strong>使用渲染树布局（Layout）所有元素。计算节点位置和尺寸信息</strong></li>
+<li><strong>渲染（Paint）所有元素。在实际的渲染中，浏览器会尽可能在多个层上渲染，这个层类似于PS里的图层概念</strong></li>
+</ol>
+</blockquote>
+<p>也就是说，主线程每次都需要执行Scripts, Render Tree, Layout和Paint这四个阶段。</p>
+<p>而使用<code>transform</code>，例如<code>transform:translate(-20px,0)</code>到<code>transform:translate(0,0)</code>，主线程<strong>只需要进行一次</strong><code>transform:translate(-20px,0)</code>到<code>transform:translate(0,0)</code>，然后合成线程将-20px转换到0px，这样的话，总计1+20次。</p>
+<h4 id="空口无凭，需要实践"><a href="#空口无凭，需要实践" class="headerlink" title="空口无凭，需要实践"></a>空口无凭，需要实践</h4><p>下面是我试验了这个方法，证明确实性能有所提升。以下代码描述了文字从出现到消失的一段位移过程。并借助Chrome devtools里的performance来比较性能差异</p>
+<p>使用平常的定位方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">.words-appear&#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  top:14vh;</span><br><span class="line">  animation:wordsmove 1s 1 forwards;</span><br><span class="line">  opacity: 0;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes wordsmove &#123;</span><br><span class="line">  to&#123;</span><br><span class="line">    top: 18vh;</span><br><span class="line">    opacity: 1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.words-disappear&#123;</span><br><span class="line">  position:relative;</span><br><span class="line">  top:18vh;</span><br><span class="line">  animation:wordsdisappear 1s 1 forwards;</span><br><span class="line">  opacity: 1;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes wordsdisappear &#123;</span><br><span class="line">  to&#123;</span><br><span class="line">    top:-10vh;</span><br><span class="line">    opacity: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="./img/CSS动画卡顿/1.png" alt=""></p>
+<p>使用transform结合animation做动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@keyframes wordsmove &#123;</span><br><span class="line">  to&#123;</span><br><span class="line">    /* top: 18vh; */</span><br><span class="line">    transform: translateY(18vh);</span><br><span class="line">    opacity: 1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.words-disappear&#123;</span><br><span class="line">  position:relative;</span><br><span class="line">  transform: translateY(18vh);</span><br><span class="line">  animation:wordsdisappear 1s 1 forwards;</span><br><span class="line">  opacity: 1;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes wordsdisappear &#123;</span><br><span class="line">  to&#123;</span><br><span class="line">    transform: translateY(-10vh);</span><br><span class="line">    opacity: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="./img/CSS动画卡顿/2.png" alt=""></p>
+<p>通过两图性能对比，使用了<code>transform</code>的总用时是363ms，而没有使用则达到了3273ms！慢了几乎整整3s！</p>
+<p>我们再来做个表格直观地感受一下耗时对比。</p>
+<table>
+<thead>
+<tr>
+<th>耗时</th>
+<th>top</th>
+<th>transform</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loading</td>
+<td>2ms</td>
+<td>4ms</td>
+</tr>
+<tr>
+<td>Scripting</td>
+<td>211ms</td>
+<td>274ms</td>
+</tr>
+<tr>
+<td>Rendering</td>
+<td>39ms</td>
+<td>3ms</td>
+</tr>
+<tr>
+<td>Painting</td>
+<td>17ms</td>
+<td>1ms</td>
+</tr>
+<tr>
+<td>System</td>
+<td>73ms</td>
+<td>30ms</td>
+</tr>
+<tr>
+<td>Idle( browser is waiting on the CPU or GPU to do some processing)</td>
+<td>2930ms</td>
+<td>51ms</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>3273ms</td>
+<td>363ms</td>
+</tr>
+</tbody>
+</table>
+<h4 id="为什么使用transform更加平滑？"><a href="#为什么使用transform更加平滑？" class="headerlink" title="为什么使用transform更加平滑？"></a>为什么使用<code>transform更加平滑？</code></h4><p>可能有人会问，<strong>为什么使用<code>transform</code>会更加平滑？</strong></p>
+<p>原因在于，在使用<code>transform</code>做动画时，<code>tranform</code>实现的动画是与合成器线程相关的，不需要等待主线程样式计算或者JS执行，计算速度是很快的，也就是避免了Paint；而使用<code>height</code>,<code>width</code>,<code>margin</code>和<code>padding</code>时，导致布局和绘制的调整，主线程需要重新计算样式并执行JS，计算速度就自然慢了。</p>
+<p>我们看看合成器线程干了什么：</p>
+<blockquote>
+<p><strong>Composite</strong>：将每个渲染层合并，生成最终的一层渲染画面。Paint阶段，每个层各自渲染，并不关心与其他层之间的关系。Composite就需要将这些层以正确的关系合成，有点像PS的导出PNG。合成发生在GPU上</p>
+</blockquote>
+<p>所以包括平时说的讲<code>translate2D</code>变<code>3D</code>，实际上是触发了层提升，使得响应的元素可以在独立层上与其他层并行处理，间接提升了渲染性能。至于所说的GPU加速，也只是因为被新建了一个层。</p>
+<p>似乎提升层来提升性能是个很不错的玩法，但是，你的硬件不是无限的，每多一个层，就会多一份内存，因此，控制层数，也是很重要的性能提升。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>正因为<code>transform</code>和<code>opacity</code>可以跳过Paint，并且可以在某种形式下告知浏览器优先以GPU来渲染，才有了现代CSS动画推崇优先使用<code>transform</code>，避免使用<code>position</code>、<code>height</code>等属性的变更来处理动画。一些流行的动画库，如iScroll、Swiper.js等，都是使用<code>transform</code>来处理位置偏移，而非<code>top</code>、<code>left</code>等，就是因为性能更高。</p>
+<h4 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h4><p><a href="https://segmentfault.com/a/1190000013045035" target="_blank" rel="noopener">CSS3动画卡顿性能优化解决方案</a></p>
+<p><a href="https://www.jianshu.com/p/b22ff1771225" target="_blank" rel="noopener">浏览器渲染机制基础</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/伪类和伪元素/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1569,145 +1785,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/把一个对象拆分成多个对象/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="sora">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sora">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/04/把一个对象拆分成多个对象/" itemprop="url">把一个对象拆分成多个对象</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-04T18:03:49+08:00">
-                2019-10-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>最近做项目有用到Element-UI中的Table组件，但是比较麻烦的是，我需要用到几行共用一个数据。需要对后台传过来的数据进行一下处理。简单地来说就是像下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">//原来的数据</span><br><span class="line">var obj1 = [</span><br><span class="line">    &#123;</span><br><span class="line">        a:&quot;01&quot;,</span><br><span class="line">        b:[&quot;1&quot;,&quot;2&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        a:&quot;02&quot;,</span><br><span class="line">        b:[&quot;3&quot;,&quot;4&quot;,&quot;5&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">//我想得到下面的这个数组</span><br><span class="line">var obj2 = [</span><br><span class="line">    &#123;</span><br><span class="line">        a:&quot;01&quot;,</span><br><span class="line">        b:[&quot;1&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        a:&quot;01&quot;,</span><br><span class="line">        b:[&quot;2&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        a:&quot;01&quot;,</span><br><span class="line">        b:[&quot;3&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        a:&quot;01&quot;,</span><br><span class="line">        b:[&quot;4&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        a:&quot;01&quot;,</span><br><span class="line">        b:[&quot;5&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
-<p>就是遍历属性b的值，创建新的对象，每个对象的属性b依次赋值。一开始想到的是最笨的方法。其实遇到这个问题，我感觉到遇到问题，一个人第一个想到的解决方法最能看出来这个人的功底。我的功底还远远不够，最近一直在看ES6，但是根本没运用上。感觉真的很像高中数学，光看书是没用的，实践大于理论。</p>
-<p>emmm题外话扯远了，看看我第一次考虑时候的问题吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">    a:&quot;01&quot;,</span><br><span class="line">    b:[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;]</span><br><span class="line">&#125;</span><br><span class="line">function tear(obj)&#123;</span><br><span class="line">    let arr = obj.b;</span><br><span class="line">    let Arr = [];</span><br><span class="line">    for(let i = 0;i&lt;arr.length;i++)&#123;</span><br><span class="line">        obj.b = arr[i];</span><br><span class="line">        console.log(obj);</span><br><span class="line">        Arr.push(obj);</span><br><span class="line">    &#125;</span><br><span class="line">    return Arr;</span><br><span class="line">&#125;</span><br><span class="line">console.log(tear(obj));</span><br></pre></td></tr></table></figure></p>
-<p>这个方法乍一看是最常规的思路，遍历obj的属性b，然后依次重写赋值。然鹅我们在控制台里打印的是这个东西<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123; a: &apos;01&apos;, b: &apos;1&apos; &#125;</span><br><span class="line">&#123; a: &apos;01&apos;, b: &apos;2&apos; &#125;</span><br><span class="line">&#123; a: &apos;01&apos;, b: &apos;3&apos; &#125;</span><br><span class="line">[ &#123; a: &apos;01&apos;, b: &apos;3&apos; &#125;, &#123; a: &apos;01&apos;, b: &apos;3&apos; &#125;, &#123; a: &apos;01&apos;, b: </span><br><span class="line">&apos;3&apos; &#125; ]</span><br></pre></td></tr></table></figure></p>
-<p>我们在一个打印处可以拿到重新修改过的obj，但是为什么打印出存放最终结果的数组，属性值全部变成数组最后一项的值了？</p>
-<p>其实是我们遍历的时候<code>obj.b=arr[i]</code>这一行，每一次都会修改obj.b的值。而push()方法push的不是值，而是指向对象的指针，在原对象上修改，值会改变。所以最后打印出来，obj的值都变成了我们最后赋值的那个b。</p>
-<h4 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h4><p>然后就去万能的度娘了，不过不知道是不是因为我的搜索词写得不那么准确，相关回答很少，找了很久，才终于找到一个靠谱的。运行一下，居然成了！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const arr = &#123;</span><br><span class="line">  opinionVO: [</span><br><span class="line">    &#123;a: &apos;&apos;, b: [1,2,3], c: 10047&#125;,</span><br><span class="line">    &#123;a: &apos;&apos;, b: [4,5,6], c: 10047&#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const result = &#123;</span><br><span class="line">  ...arr,</span><br><span class="line">  opinionVO: arr.opinionVO.reduce((res, item) =&gt; res.concat(...item.b.map(b =&gt; (&#123;...item, b&#125;))), []),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">console.log(result)</span><br></pre></td></tr></table></figure></p>
-<p>乍一看没看懂，这种长长的链式结构真的太不友好了。。。问了菠萝，菠萝说这种写法摆在业务里是要被那啥的。arr.reduce()方法之前没接触过，还有最后为什么是返回多个对象组成的数组，哪里有新建对象了。非常的懵懂，看了一天好像也没怎么弄懂，只是大致知道它做了什么。然后晚上就问了zz和红莲，终于弄懂了。。下面整理一下这串长代码里涉及到的ES6知识点。</p>
-<h4 id="扩展运算符"><a href="#扩展运算符" class="headerlink" title="扩展运算符"></a>扩展运算符</h4><blockquote>
-<p>扩展运算符(spread)是三个点(…)，它如同rest参数的逆运算，将一个数组转为用逗号分隔的参数序列。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//看一个例子</span><br><span class="line">console.log(...[1,2,3])</span><br><span class="line">// 1 2 3</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>这个例子说明了…最简单的用法：将一个数组变成参数序列。那么在那段ES6代码中，我把…arr打印出来，结果会是什么呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const arr = &#123;</span><br><span class="line">  opinionVO: [</span><br><span class="line">    &#123;a: &apos;&apos;, b: [1,2,3], c: 10047&#125;,</span><br><span class="line">    &#123;a: &apos;&apos;, b: [4,5,6], c: 10047&#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br><span class="line">//尝试打印...arr</span><br><span class="line">console.log(...arr);</span><br></pre></td></tr></table></figure></p>
-<p>(图片一)<br>显示图示报错信息。为什么不能直接打印出来呢？我们可以这样考虑，如果把这个对象变成参数序列，打印出来的是这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">opinionVO:&#123;</span><br><span class="line">    &#123;a: &apos;&apos;, b: [1,2,3], c: 10047&#125;,</span><br><span class="line">    &#123;a: &apos;&apos;, b: [4,5,6], c: 10047&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样看是不是少了什么？可以直接这样打印吗。没错，就是少了一个{}，我们把上述代码改成这样就可以成功打印了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const arr = &#123;</span><br><span class="line">  opinionVO: [</span><br><span class="line">    &#123;a: &apos;&apos;, b: [1,2,3], c: 10047&#125;,</span><br><span class="line">    &#123;a: &apos;&apos;, b: [4,5,6], c: 10047&#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br><span class="line">const result = &#123;</span><br><span class="line">    ...arr</span><br><span class="line">&#125;</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
-<p>这样一来我们可以成功打印出结果了。我们再看一个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//wrong</span><br><span class="line">var obj = &#123;a:1,b:2&#125;;</span><br><span class="line">console.log([...obj]);</span><br><span class="line"></span><br><span class="line">//right</span><br><span class="line">var obj = &#123;a:1,b:2&#125;;</span><br><span class="line">console.log(&#123;...obj&#125;);</span><br></pre></td></tr></table></figure></p>
-<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h4><p>reduce(fn,initValue)方法接受两个参数，第一个是对数组每项元素进行处理的回调函数，initValue是累加器的初值。没有时，累加器第一次的值为currentValue。</p>
-<p>fn接受4个参数，分别是</p>
-<p><strong>accumulator</strong>累加器，即函数上一次调用的返回值。初值为<code>initValue || arr[0]</code><br><br><strong>currentValue</strong>数组中正在处理的值。初值为<code>initValue || arr[1]</code><br><br><strong>currentIndex</strong>(可选)数组中正在处理的值的索引<br><br><strong>array</strong>函数调用的数组</p>
-<p>这些基础知识我们知道了以后，再看上面那段ES6代码，相当于是对opinionVo数组的每个元素进行处理。res.concat()相当于把每次的返回值连接起来。就得到了一个由对象组成的新数组。那么问题来了，为什么是返回对象呢？原代码中最让我理解不了的就是这里：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b =&gt; (&#123;...item, b&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>这就返回对象了？我知道map()方法是对数组中每个元素进行修改，并返回修改后新数组。经过询问，终于得出了答案。…item列出了opinionVO的元素，原来的b会被修改后的b覆盖(所以必须同名，不然就会在对象后面新增加一个b)。而为什么{}外面会有()呢？是因为为了避免歧义。如果我们在箭头函数后面返回一个{a:123}，浏览器会认为这是一个函数。所以我们要在前面加一个()，说明它是一个对象。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1758,7 +1835,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

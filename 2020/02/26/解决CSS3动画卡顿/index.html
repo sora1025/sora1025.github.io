@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写在前面最近做的一个小动画，只是简单的文字平移，却出现了卡顿现象，本文内容大部分来源于网上的博客，demo部分则是自己实践的。所以学习前端，实践真的很重要。 为什么会卡顿？浏览器是单线程运行的。所以我们先要明确以下几下概念：单线程，主线程和合成线程。 一般情况下，主线程：  运行JavaScript 计算HTML元素的CSS样式 页面的布局 将元素绘制到一个或多个位图中 将这些位图交给合成线程">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决CSS3动画卡顿">
+<meta property="og:url" content="http://yoursite.com/2020/02/26/解决CSS3动画卡顿/index.html">
+<meta property="og:site_name" content="Sora">
+<meta property="og:description" content="写在前面最近做的一个小动画，只是简单的文字平移，却出现了卡顿现象，本文内容大部分来源于网上的博客，demo部分则是自己实践的。所以学习前端，实践真的很重要。 为什么会卡顿？浏览器是单线程运行的。所以我们先要明确以下几下概念：单线程，主线程和合成线程。 一般情况下，主线程：  运行JavaScript 计算HTML元素的CSS样式 页面的布局 将元素绘制到一个或多个位图中 将这些位图交给合成线程">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/02/26/解决CSS3动画卡顿/img/CSS动画卡顿/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/26/解决CSS3动画卡顿/img/CSS动画卡顿/2.png">
+<meta property="og:updated_time" content="2020-02-26T12:48:36.835Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决CSS3动画卡顿">
+<meta name="twitter:description" content="写在前面最近做的一个小动画，只是简单的文字平移，却出现了卡顿现象，本文内容大部分来源于网上的博客，demo部分则是自己实践的。所以学习前端，实践真的很重要。 为什么会卡顿？浏览器是单线程运行的。所以我们先要明确以下几下概念：单线程，主线程和合成线程。 一般情况下，主线程：  运行JavaScript 计算HTML元素的CSS样式 页面的布局 将元素绘制到一个或多个位图中 将这些位图交给合成线程">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/26/解决CSS3动画卡顿/img/CSS动画卡顿/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/26/解决CSS3动画卡顿/"/>
+
+
+
+
+
+  <title>解决CSS3动画卡顿 | Sora</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sora</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/解决CSS3动画卡顿/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">解决CSS3动画卡顿</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-26T20:47:15+08:00">
+                2020-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>最近做的一个小动画，只是简单的文字平移，却出现了卡顿现象，本文内容大部分来源于网上的博客，demo部分则是自己实践的。所以学习前端，实践真的很重要。</p>
+<h4 id="为什么会卡顿？"><a href="#为什么会卡顿？" class="headerlink" title="为什么会卡顿？"></a>为什么会卡顿？</h4><p>浏览器是单线程运行的。所以我们先要明确以下几下概念：单线程，主线程和合成线程。</p>
+<p>一般情况下，主线程：</p>
+<ol>
+<li>运行JavaScript</li>
+<li>计算HTML元素的CSS样式</li>
+<li>页面的布局</li>
+<li>将元素绘制到一个或多个位图中</li>
+<li>将这些位图交给合成线程</li>
+</ol>
+<p>相应地，合成线程负责：</p>
+<ol>
+<li>通过GPU将位图绘制到屏幕上</li>
+<li>通知主线程更新页面中可见或即将变成可见的部分的位图</li>
+<li>计算出页面中哪个部分是可见的</li>
+<li>计算出当你在滚动页面时哪部分是即将变成可见的</li>
+<li>当你滚动页面时将相应位置的元素移动到可视区域</li>
+</ol>
+<h4 id="那么为什么会造成动画卡顿呢？"><a href="#那么为什么会造成动画卡顿呢？" class="headerlink" title="那么为什么会造成动画卡顿呢？"></a>那么为什么会造成动画卡顿呢？</h4><p>原因是主线程和合成线程的调度不合理。</p>
+<p>在使用<code>height</code>,<code>width</code>,<code>margin</code>,<code>padding</code>作为<code>transition</code>的值时，会造成浏览器主线程的工作较重。例如，从<code>margin-left: -20px</code>渲染到<code>margin-left:0</code>,主线程需要计算样式<code>margin-left:19px</code>,<code>margin-left:-18px</code>…一直到<code>margin-left:0</code>,而且每一次主线程计算样式后，合成进程都需要绘制到GPU然后渲染到屏幕上，前后总共进行20次主线程渲染，20次合成进程渲染，20次+20次，总共40次计算。</p>
+<p>主线程的渲染流程，可以参考浏览器渲染网页的流程：</p>
+<blockquote>
+<ol>
+<li>使用 HTML 创建文档对象模型（DOM）</li>
+<li>使用 CSS 创建 CSS 对象模型（CSSOM）</li>
+<li><strong>基于 DOM 和 CSSOM 执行脚本（Scripts）</strong></li>
+<li><strong>合并 DOM 和 CSSOM 形成渲染树（Render Tree）</strong></li>
+<li><strong>使用渲染树布局（Layout）所有元素。计算节点位置和尺寸信息</strong></li>
+<li><strong>渲染（Paint）所有元素。在实际的渲染中，浏览器会尽可能在多个层上渲染，这个层类似于PS里的图层概念</strong></li>
+</ol>
+</blockquote>
+<p>也就是说，主线程每次都需要执行Scripts, Render Tree, Layout和Paint这四个阶段。</p>
+<p>而使用<code>transform</code>，例如<code>transform:translate(-20px,0)</code>到<code>transform:translate(0,0)</code>，主线程<strong>只需要进行一次</strong><code>transform:translate(-20px,0)</code>到<code>transform:translate(0,0)</code>，然后合成线程将-20px转换到0px，这样的话，总计1+20次。</p>
+<h4 id="空口无凭，需要实践"><a href="#空口无凭，需要实践" class="headerlink" title="空口无凭，需要实践"></a>空口无凭，需要实践</h4><p>下面是我试验了这个方法，证明确实性能有所提升。以下代码描述了文字从出现到消失的一段位移过程。并借助Chrome devtools里的performance来比较性能差异</p>
+<p>使用平常的定位方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">.words-appear&#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  top:14vh;</span><br><span class="line">  animation:wordsmove 1s 1 forwards;</span><br><span class="line">  opacity: 0;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes wordsmove &#123;</span><br><span class="line">  to&#123;</span><br><span class="line">    top: 18vh;</span><br><span class="line">    opacity: 1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.words-disappear&#123;</span><br><span class="line">  position:relative;</span><br><span class="line">  top:18vh;</span><br><span class="line">  animation:wordsdisappear 1s 1 forwards;</span><br><span class="line">  opacity: 1;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes wordsdisappear &#123;</span><br><span class="line">  to&#123;</span><br><span class="line">    top:-10vh;</span><br><span class="line">    opacity: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="./img/CSS动画卡顿/1.png" alt=""></p>
+<p>使用transform结合animation做动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@keyframes wordsmove &#123;</span><br><span class="line">  to&#123;</span><br><span class="line">    /* top: 18vh; */</span><br><span class="line">    transform: translateY(18vh);</span><br><span class="line">    opacity: 1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.words-disappear&#123;</span><br><span class="line">  position:relative;</span><br><span class="line">  transform: translateY(18vh);</span><br><span class="line">  animation:wordsdisappear 1s 1 forwards;</span><br><span class="line">  opacity: 1;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes wordsdisappear &#123;</span><br><span class="line">  to&#123;</span><br><span class="line">    transform: translateY(-10vh);</span><br><span class="line">    opacity: 0;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="./img/CSS动画卡顿/2.png" alt=""></p>
+<p>通过两图性能对比，使用了<code>transform</code>的总用时是363ms，而没有使用则达到了3273ms！慢了几乎整整3s！</p>
+<p>我们再来做个表格直观地感受一下耗时对比。</p>
+<table>
+<thead>
+<tr>
+<th>耗时</th>
+<th>top</th>
+<th>transform</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loading</td>
+<td>2ms</td>
+<td>4ms</td>
+</tr>
+<tr>
+<td>Scripting</td>
+<td>211ms</td>
+<td>274ms</td>
+</tr>
+<tr>
+<td>Rendering</td>
+<td>39ms</td>
+<td>3ms</td>
+</tr>
+<tr>
+<td>Painting</td>
+<td>17ms</td>
+<td>1ms</td>
+</tr>
+<tr>
+<td>System</td>
+<td>73ms</td>
+<td>30ms</td>
+</tr>
+<tr>
+<td>Idle( browser is waiting on the CPU or GPU to do some processing)</td>
+<td>2930ms</td>
+<td>51ms</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>3273ms</td>
+<td>363ms</td>
+</tr>
+</tbody>
+</table>
+<h4 id="为什么使用transform更加平滑？"><a href="#为什么使用transform更加平滑？" class="headerlink" title="为什么使用transform更加平滑？"></a>为什么使用<code>transform更加平滑？</code></h4><p>可能有人会问，<strong>为什么使用<code>transform</code>会更加平滑？</strong></p>
+<p>原因在于，在使用<code>transform</code>做动画时，<code>tranform</code>实现的动画是与合成器线程相关的，不需要等待主线程样式计算或者JS执行，计算速度是很快的，也就是避免了Paint；而使用<code>height</code>,<code>width</code>,<code>margin</code>和<code>padding</code>时，导致布局和绘制的调整，主线程需要重新计算样式并执行JS，计算速度就自然慢了。</p>
+<p>我们看看合成器线程干了什么：</p>
+<blockquote>
+<p><strong>Composite</strong>：将每个渲染层合并，生成最终的一层渲染画面。Paint阶段，每个层各自渲染，并不关心与其他层之间的关系。Composite就需要将这些层以正确的关系合成，有点像PS的导出PNG。合成发生在GPU上</p>
+</blockquote>
+<p>所以包括平时说的讲<code>translate2D</code>变<code>3D</code>，实际上是触发了层提升，使得响应的元素可以在独立层上与其他层并行处理，间接提升了渲染性能。至于所说的GPU加速，也只是因为被新建了一个层。</p>
+<p>似乎提升层来提升性能是个很不错的玩法，但是，你的硬件不是无限的，每多一个层，就会多一份内存，因此，控制层数，也是很重要的性能提升。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>正因为<code>transform</code>和<code>opacity</code>可以跳过Paint，并且可以在某种形式下告知浏览器优先以GPU来渲染，才有了现代CSS动画推崇优先使用<code>transform</code>，避免使用<code>position</code>、<code>height</code>等属性的变更来处理动画。一些流行的动画库，如iScroll、Swiper.js等，都是使用<code>transform</code>来处理位置偏移，而非<code>top</code>、<code>left</code>等，就是因为性能更高。</p>
+<h4 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h4><p><a href="https://segmentfault.com/a/1190000013045035" target="_blank" rel="noopener">CSS3动画卡顿性能优化解决方案</a></p>
+<p><a href="https://www.jianshu.com/p/b22ff1771225" target="_blank" rel="noopener">浏览器渲染机制基础</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/08/伪类和伪元素/" rel="next" title="伪类和伪元素">
+                <i class="fa fa-chevron-left"></i> 伪类和伪元素
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">sora</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么会卡顿？"><span class="nav-number">2.</span> <span class="nav-text">为什么会卡顿？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#那么为什么会造成动画卡顿呢？"><span class="nav-number">3.</span> <span class="nav-text">那么为什么会造成动画卡顿呢？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空口无凭，需要实践"><span class="nav-number">4.</span> <span class="nav-text">空口无凭，需要实践</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么使用transform更加平滑？"><span class="nav-number">5.</span> <span class="nav-text">为什么使用transform更加平滑？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考博客"><span class="nav-number">7.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sora</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
