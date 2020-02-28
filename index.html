@@ -249,6 +249,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/撸一个Babel-从原理到实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/28/撸一个Babel-从原理到实践/" itemprop="url">撸一个Babel(从原理到实践)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-28T23:11:09+08:00">
+                2020-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h4><p>习惯性的碎碎念，腾讯面试到这里可能告一段落了，其他公司的面试还没开始，所以趁这个时候想学一些自己感兴趣的东西。那如标题所示，我要学习手写一个<code>Babel</code>~文章有点长，希望读者能耐心看完，错误的地方希望指正。</p>
+<h4 id="二、Babel是啥？"><a href="#二、Babel是啥？" class="headerlink" title="二、Babel是啥？"></a>二、Babel是啥？</h4><blockquote>
+<p>Babel是一个JavaScript编译器，它把最新版的JavaScript编译成当下可执行的版本，简言之，利用Babel就可以让我们在当前的项目中随意的使用这些最新的ES6，甚至ES7的语法！</p>
+</blockquote>
+<p>简单来说，<code>Babel</code>可以转译<code>ES 2015+</code>的代码，使它在旧的浏览器或者环境中也能够运行。</p>
+<p><code>Babel</code>的功能很纯粹。我们传递一段源代码给<code>Babel</code>，然后它返回一串新的代码给我们。就是这么简单，它不会运行我们的代码，也不会去打包我们的代码。它只是一个编译器。</p>
+<h4 id="三、Babel的运行原理"><a href="#三、Babel的运行原理" class="headerlink" title="三、Babel的运行原理"></a>三、Babel的运行原理</h4><h4 id="1-AST"><a href="#1-AST" class="headerlink" title="1.AST"></a>1.AST</h4><p>首先要理解一个概念：抽象语法树(Abstract Syntax Tree)，<strong><code>Babel</code>本质上就是操作<code>AST</code>来完成代码的转译</strong>。那什么是<code>AST</code>呢？可以移步看这篇文章：<a href="https://segmentfault.com/a/1190000016231512?utm_source=tag-newest" target="_blank" rel="noopener">AST抽象语法树————最基础的javascript重点知识，99%的人根本不了解</a>。我就不献丑了。</p>
+<h4 id="2-编译过程"><a href="#2-编译过程" class="headerlink" title="2.编译过程"></a>2.编译过程</h4><p>那了解AST是什么以后，就可以理解<code>Babel</code>的工作原理了。上面说过，<code>Babel</code>是一个编译器，所以它的工作过程可以分为三部分：</p>
+<ol>
+<li><strong>Parse(解析)</strong>：将源代码转换为AST</li>
+<li><strong>Transform(转换)</strong>：对AST进行遍历修改</li>
+<li><strong>Generator(代码生成)</strong>：将第二步经过转换过的AST生成新的代码。</li>
+</ol>
+<h4 id="3-Parse"><a href="#3-Parse" class="headerlink" title="3.Parse"></a>3.Parse</h4><p>一般来说，<code>Parse</code>阶段可以细分成两个阶段：<strong>词法分析</strong>和<strong>语法分析</strong>。</p>
+<ul>
+<li><strong>词法分析</strong></li>
+</ul>
+<p>词法分析阶段可以看成是对代码进行“分词”，它接收一段源代码，然后执行一段<code>tokenize</code>函数，把代码分割成被称为<code>Tokens</code>的东西，<code>Tokens</code>是一个数组，由一些代码的碎片组成。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const add = (a,b) =&gt; a + b;</span><br></pre></td></tr></table></figure></p>
+<p>会被分割成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Keyword&quot;, &quot;value&quot;: &quot;const&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Identifier&quot;, &quot;value&quot;: &quot;add&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Punctuator&quot;, &quot;value&quot;: &quot;=&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Punctuator&quot;, &quot;value&quot;: &quot;(&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Identifier&quot;, &quot;value&quot;: &quot;a&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Punctuator&quot;, &quot;value&quot;: &quot;,&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Identifier&quot;, &quot;value&quot;: &quot;b&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Punctuator&quot;, &quot;value&quot;: &quot;)&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Punctuator&quot;, &quot;value&quot;: &quot;=&gt;&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Identifier&quot;, &quot;value&quot;: &quot;a&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Punctuator&quot;, &quot;value&quot;: &quot;+&quot; &#125;,</span><br><span class="line">    &#123; &quot;type&quot;: &quot;Identifier&quot;, &quot;value&quot;: &quot;b&quot; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>语法分析</strong></li>
+</ul>
+<p>词法分析之后，代码就已经变成一个<code>Tokens</code>数组了，现在需要通过语法分析把<code>Tokens</code>转换成<code>AST</code></p>
+<h4 id="4-Transform"><a href="#4-Transform" class="headerlink" title="4.Transform"></a>4.Transform</h4><p>这一步做的事情就是操作<code>AST</code>。<code>AST</code>中有很多节点，一个节点中含有若干属性，用于描述<code>AST</code>的部分信息。</p>
+<p>比如这是一个最常见的<code>Identifier</code>节点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type:&apos;Identifier&apos;,</span><br><span class="line">    name:&apos;add&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>表示这是一个标识符。</p>
+<p>所以操作<code>AST</code>也就是操作其中的节点，可以增删改这些节点，从而转换成实际需要的<code>AST</code>。</p>
+<p><code>Babel</code>对于<code>AST</code>的遍历是深度优先遍历，对于<code>AST</code>上的每一个分支。<code>Babel</code>都会先向下遍历走到尽头，然后再向上遍历退出刚遍历过的节点，然后寻找下一个分支。上面的箭头函数例子如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;type&quot;: &quot;Program&quot;,</span><br><span class="line">  &quot;body&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;type&quot;: &quot;VariableDeclaration&quot;, // 变量声明</span><br><span class="line">      &quot;declarations&quot;: [ // 具体声明</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;VariableDeclarator&quot;, // 变量声明</span><br><span class="line">          &quot;id&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;Identifier&quot;, // 标识符（最基础的）</span><br><span class="line">            &quot;name&quot;: &quot;add&quot; // 函数名</span><br><span class="line">          &#125;,</span><br><span class="line">          &quot;init&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;ArrowFunctionExpression&quot;, // 箭头函数</span><br><span class="line">            &quot;id&quot;: null,</span><br><span class="line">            &quot;expression&quot;: true,</span><br><span class="line">            &quot;generator&quot;: false,</span><br><span class="line">            &quot;params&quot;: [ // 参数</span><br><span class="line">              &#123;</span><br><span class="line">                &quot;type&quot;: &quot;Identifier&quot;,</span><br><span class="line">                &quot;name&quot;: &quot;a&quot;</span><br><span class="line">              &#125;,</span><br><span class="line">              &#123;</span><br><span class="line">                &quot;type&quot;: &quot;Identifier&quot;,</span><br></pre></td></tr></table></figure></p>
+<p>根节点我们就不说了，从<code>declaration</code>里开始遍历：</p>
+<ol>
+<li>声明了一个变量，并且知道了它的内部属性（<code>id</code>、`init），然后我们再以此访问每一个属性以及它们的子节点。</li>
+<li><code>id</code>是一个<code>Idenrifier</code>，有一个 <code>name</code>属性表示变量名。之后是<code>init</code>，<code>init</code>也有好几个内部属性：<ul>
+<li><code>type</code>是<code>ArrowFunctionExpression</code>，表示这是一个箭头函数表达式</li>
+<li><code>params</code>是这个箭头函数的入参,其中每一个参数都是一个<code>Identifier</code>类型的节点；</li>
+<li><code>body</code>属性是这个箭头函数的主体，这是一个<code>BinaryExpression</code>二项式：<code>left</code>、<code>operator</code>、<code>right</code>，分别表示二项式的左边变量、运算符以及右边变量。</li>
+</ul>
+</li>
+</ol>
+<p>这是遍历<code>AST</code>的白话形式，再看看<code>Babel</code>是怎么做的：</p>
+<h4 id="5-Visitor"><a href="#5-Visitor" class="headerlink" title="5.Visitor"></a>5.Visitor</h4><p><code>Babel</code>会维护一个称作<code>Visitor</code>的对象，这个对象定义了用于<code>AST</code>中获取具体节点的方法。比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var visitor = &#123;</span><br><span class="line">    ArrowFunction() &#123;</span><br><span class="line">        console.log(&apos;我是箭头函数&apos;);</span><br><span class="line">    &#125;,</span><br><span class="line">    IfStatement() &#123;</span><br><span class="line">        console.log(&apos;我是一个if语句&apos;);</span><br><span class="line">    &#125;,</span><br><span class="line">    CallExpression() &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>当我们遍历<code>AST</code>的时候，如果匹配上其中一个<code>type</code>，就会调用<code>visitor</code>里的方法。</p>
+<h4 id="四、开始实现一个简单的Babel"><a href="#四、开始实现一个简单的Babel" class="headerlink" title="四、开始实现一个简单的Babel!"></a>四、开始实现一个简单的Babel!</h4><p>说了那么多，终于可以开始动手了！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">做一个简单的ES6转ES5插件：</span><br><span class="line">1.let,const声明 --&gt; var声明</span><br><span class="line">2.箭头函数 --&gt; 普通函数</span><br></pre></td></tr></table></figure></p>
+<p>文件结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">index.js 入口文件</span><br><span class="line">plugin.js 插件</span><br><span class="line">before.js 转换前的js文件</span><br><span class="line">after.js 转换后的js文件</span><br><span class="line">package.json</span><br></pre></td></tr></table></figure></p>
+<p>首先，我们创建一个package.json。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure></p>
+<p>下载<code>babel-core</code>作为我们的开发依赖，并且配置<code>npm run babel</code>命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install babel-core -d</span><br></pre></td></tr></table></figure></p>
+<p><strong>package.json</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;babel-sample&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;fullfill a babel-loader&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;babel&quot;: &quot;node ./index.js&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;author&quot;: &quot;sora&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;babel-core&quot;: &quot;^6.26.3&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>index.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const &#123; transform &#125;  = require(&apos;babel-core&apos;);</span><br><span class="line"></span><br><span class="line">const fs = require(&apos;fs&apos;);</span><br><span class="line"></span><br><span class="line">//读取需要转换的js字符串</span><br><span class="line">const before = fs.readFileSync(&apos;./before.js&apos;,&apos;utf8&apos;);</span><br><span class="line"></span><br><span class="line">//使用babel-core的transform API和插件进行字符串-&gt;AST转化</span><br><span class="line">const res = transform(`$&#123;before&#125;`,&#123;</span><br><span class="line">  plugins:[require(&apos;./plugin&apos;)]</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//存在after.js删除</span><br><span class="line">fs.existsSync(&apos;./after.js&apos;) &amp;&amp; fs.unlinkSync(&apos;./after.js&apos;);</span><br><span class="line"></span><br><span class="line">//写入转化后的结果得到after.js</span><br><span class="line">fs.writeFileSync(&apos;./after.js&apos;,res.code,&apos;utf8&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>我们首先来实现功能<code>let,const声明 -&gt; var声明</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let a = 1;</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://astexplorer.net/" target="_blank" rel="noopener">在这个网站</a>看一下这段代码的AST结构：</p>
+<p><img src="./img/babel原理/let.png" alt="let"></p>
+<p>我们再来看看这段代码的AST结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var a = 1;</span><br></pre></td></tr></table></figure></p>
+<p><img src="./img/babel原理/var.png" alt="var"></p>
+<p>我们看到这句声明语句位于<code>VariableDeclaration</code>节点，我们接下来只要操作该节点对应的<code>kind</code>属性就可以啦~</p>
+<p><strong>plugin.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(&#123; types : t&#125;)&#123;</span><br><span class="line">  return&#123;</span><br><span class="line">    visitor:&#123;</span><br><span class="line">      VariableDeclaration(path)&#123;</span><br><span class="line">        const node = path.node;</span><br><span class="line">        [&apos;let&apos;,&apos;const&apos;].includes(node.kind) &amp;&amp; (node.kind = &apos;var&apos;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>before.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const a = 123;</span><br><span class="line"> </span><br><span class="line">let b = 456;</span><br></pre></td></tr></table></figure></p>
+<p>我们来run一下看看效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run babel</span><br></pre></td></tr></table></figure></p>
+<p>然后我们点进一开始我们创建好的after.js文件，惊讶地发现：</p>
+<p><img src="./img/babel原理/lettovar.png" alt="lettovar"></p>
+<p>amazing!成就感满满，那接下来继续搞定箭头函数的转换！实现<code>箭头函数 -&gt; 普通函数</code></p>
+<p>我们继续观察箭头函数对应的节点是什么。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let add = (a,b) =&gt; &#123;</span><br><span class="line">    return a + b</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><img src="./img/babel原理/arrowFunction.png" alt="arrowFunction"></p>
+<p>我们可以看到箭头函数对应的节点是<code>ArrowFunctionExpression</code>。再来看看普通函数对应的节点是什么。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let add = function(a,b)&#123;</span><br><span class="line">    return a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="./img/babel原理/normalFunction.png" alt="normalFunction"></p>
+<p>OK,get到普通函数对应的节点是<code>FunctionExpression</code>。所以按照上面的思路，我们继续做节点替换。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(&#123; types : t&#125;)&#123;</span><br><span class="line">  return&#123;</span><br><span class="line">    visitor:&#123;</span><br><span class="line">      VariableDeclaration(path)&#123;</span><br><span class="line">        const node = path.node;</span><br><span class="line">        [&apos;let&apos;,&apos;const&apos;].includes(node.kind) &amp;&amp; (node.kind = &apos;var&apos;);</span><br><span class="line">      &#125;,</span><br><span class="line">      ArrowFunctionExpression(path)&#123;</span><br><span class="line">        let &#123;id,params,body,generator,async&#125; = path.node;</span><br><span class="line">        path.replaceWith(t.functionExpression(id,params,body,generator,async));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>我们再继续激动的run一下，发现after.js里。。。</p>
+<p><img src="./img/babel原理/arrowToNormal1.png" alt="arrowToNormal1"><br>yes!成功了！但是工作并没有结束，因为写箭头函数时我们经常省略<code>return</code>来写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let add = (a,b) =&gt; a + b;</span><br></pre></td></tr></table></figure></p>
+<p>run的时候你会发现控制台直接报错了，还是太年轻了~我们来看看报错信息：</p>
+<p><img src="./img/babel原理/error.png" alt="error"></p>
+<p>从报错信息我们看到，函数表达式的body应该是块级声明<code>BlockStatement</code>，而非二项式<code>BinaryExpression</code>。读者可以自行上刚刚的网站查证，省略<code>{}</code>前后，<code>body</code>的<code>type</code>变化。所以我们还要进行一次转化。</p>
+<p>修改后的<strong>plugin.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(&#123; types : t&#125;)&#123;</span><br><span class="line">  return&#123;</span><br><span class="line">    visitor:&#123;</span><br><span class="line">      VariableDeclaration(path)&#123;</span><br><span class="line">        const node = path.node;</span><br><span class="line">        [&apos;let&apos;,&apos;const&apos;].includes(node.kind) &amp;&amp; (node.kind = &apos;var&apos;);</span><br><span class="line">      &#125;,</span><br><span class="line">      ArrowFunctionExpression(path)&#123;</span><br><span class="line">        let &#123;id,params,body,generator,async&#125; = path.node;</span><br><span class="line">        if (!t.isBlockStatement(body)) &#123;    </span><br><span class="line">          const node = t.returnStatement(body);</span><br><span class="line">          body = t.blockStatement([node]);</span><br><span class="line">        &#125;</span><br><span class="line">        path.replaceWith(t.functionExpression(id,params,body,generator,async));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>run一下发现成功啦！至此我们要实现的两个功能已经全部完成，撒花~</p>
+<h4 id="后记以及参考博客"><a href="#后记以及参考博客" class="headerlink" title="后记以及参考博客"></a>后记以及参考博客</h4><p>这篇文章到这里也就结束了，参考的博客中有些作者可以参考源码写出来一些属于自己的实现函数，希望通过不断的学习，自己有一天也能写出厉害的东西。</p>
+<p><a href="jianshu.com/p/e4eb352b4a16">[实践系列]Babel原理</a></p>
+<p><a href="https://segmentfault.com/a/1190000019578478" target="_blank" rel="noopener">初学Babel工作原理</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/解决CSS3动画卡顿/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1649,142 +1842,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/09/域名收敛和域名发散/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="sora">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sora">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/01/09/域名收敛和域名发散/" itemprop="url">域名收敛和域名发散</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-09T14:52:21+08:00">
-                2020-01-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>今天在学习过程中看到一个名词：<strong>域名收敛</strong>。感觉好高大上，没听过。于是便去学习了一下，参考了好几篇博客，自己整理了一下知识点。文末会放上参考博客链接！</p>
-<h4 id="域名发散"><a href="#域名发散" class="headerlink" title="域名发散"></a>域名发散</h4><p>由于浏览器的限制，每个浏览器，允许对每个域名的连接数一般是有上限的。一般来说浏览器内每个hostname的最大连接数基本是6个，总体而言并发数不高。所以PC时代为了突破浏览器的域名并发限制，遵循这样一条定律：</p>
-<blockquote>
-<p>http静态资源采用多个子域名</p>
-</blockquote>
-<p>目的是充分利用现代浏览器的<strong>多线程并发下载能力</strong>。所以PC时代对静态资源优化时，通常将静态资源分布在几个不同域，保证资源最完美地分域名存储。</p>
-<h4 id="域名收敛"><a href="#域名收敛" class="headerlink" title="域名收敛"></a>域名收敛</h4><p>域名收敛就是建议将静态资源只放在一个域名下面，而非发散情况下的多个域名下。可是上面说了，域名发散可以提高并发下载能力，为什么这里又提倡域名收敛？是因为域名发散是PC时代的产物，对于PC上的DNS通常情况下就是几十ms，因为PC可以存储很多的域名地址。但现在进入移动互联网时代，对于手机端来说，一般在手机端解析DNS会到1s+，首屏的3s的最佳时间，已经没了1/3.</p>
-<p>所以一般来说，<strong>在手机端上的域名数不能超过5个</strong>。基本的分配就是</p>
-<p>HTML +1</p>
-<p>CSS +1</p>
-<p>img +1</p>
-<p>JS +1</p>
-<p>fonts +1</p>
-<p>不过也得看具体应用场景</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>DNS解析是一个很复杂的过程，在PC上，我们采用域名发散策略，是因为在PC端上，DNS解析通常只需要几十ms。而移动端，2G网络，3G网络，4G网络/wifi强网，DNS的消耗相当可观。在增加域的同时，往往会给浏览器带来DNS解析的开销。所以在这种情况下，提出了域名收敛，减少域名数量可以降低DNS解析的成本。</p>
-<p>传送门一：<a href="https://segmentfault.com/a/1190000004641599" target="_blank" rel="noopener">域名收敛–前端优化(二)</a></p>
-<p>传送门二：<a href="https://www.cnblogs.com/coco1s/p/5365179.html" target="_blank" rel="noopener">【前端性能】浅谈域名发散与域名收敛</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1835,7 +1892,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1848,7 +1905,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
