@@ -251,6 +251,131 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/只出现一次的数字/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/10/只出现一次的数字/" itemprop="url">只出现一次的数字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-10T15:09:50+08:00">
+                2020-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素</p>
+<p>示例1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[2,2,1]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure></p>
+<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><p>看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。</p>
+<p>异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let a = 1^2 //3</span><br><span class="line">//转换过程</span><br><span class="line">//1 -&gt; 01</span><br><span class="line">//2 -&gt; 10</span><br><span class="line">//1^2 -&gt; 11 -&gt;3</span><br></pre></td></tr></table></figure></p>
+<p>关于异或这种解法，首先有几个数学知识要掌握：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 交换律：a^b^c &lt;=&gt; a^c^b</span><br><span class="line">2. 任何数异或0为任何数：n^0 &lt;=&gt; n</span><br><span class="line">3. 相同数异或为0: n^n</span><br></pre></td></tr></table></figure></p>
+<p>掌握了这些知识，这道题就迎刃而解了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var singleNumber = function(nums) &#123;</span><br><span class="line">    let res = 0;    //0与任何数异或为任何数</span><br><span class="line">    for(let i = 0;i&lt;nums.length;i++)&#123;</span><br><span class="line">        res^=nums[i]; //如果之后出现相同的数结果就会为0，继续进行异或操作</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/09/域名收敛和域名发散/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1513,193 +1638,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/30/HTTP缓存/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="sora">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sora">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/30/HTTP缓存/" itemprop="url">HTTP缓存</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-30T15:11:26+08:00">
-                2019-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>Web 缓存大致可以分为：数据库缓存、服务器端缓存（代理服务器缓存、CDN 缓存）、浏览器缓存。</p>
-<p>浏览器缓存也包含很多内容： HTTP 缓存、indexDB、cookie、localstorage 等等。这里我们只讨论 HTTP 缓存相关内容。<br>HTTP缓存机制是web性能优化的重要手段。</p>
-<h4 id="什么是浏览器缓存"><a href="#什么是浏览器缓存" class="headerlink" title="什么是浏览器缓存"></a>什么是浏览器缓存</h4><p><img src="./img/HTTP缓存/HTTP缓存0.png" alt=""><br>简单来说，浏览器缓存其实就是浏览器保存通过HTTP获取的所有资源，是浏览器将网络资源存储在本地的一种行为。</p>
-<h4 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h4><p>HTTP报文是浏览器和服务器间通信时发送及响应的数据块。浏览器向服务器请求数据，发送请求(request)报文；服务器向浏览器返回数据，返回响应(response)报文。</p>
-<p>报文信息主要分为两个部分</p>
-<ol>
-<li>包含属性的首部(header)——-附加信息(cookie,缓存信息等)与缓存相关的规则信息，均包含在header中</li>
-<li>包含数据的主体部分(body)—–HTTP请求真正想要传输的部分</li>
-</ol>
-<h4 id="缓存规则解析"><a href="#缓存规则解析" class="headerlink" title="缓存规则解析"></a>缓存规则解析</h4><p>可以想象浏览器存在一个缓存数据库，用于存储信息。在客户端第一次请求数据时，此时缓存数据库中没有对应的缓存数据，需要请求服务器，服务器返回后，将数据存储至缓存数据库中。</p>
-<p>HTTP缓存有多种规则，根据是否需要重新向服务器发起请求来分类，可分为两大类(强制缓存，对比缓存)<br><img src="./img/HTTP缓存/HTTP缓存1.png" alt=""></p>
-<p>HTTP缓存有多种规则，根据<strong>是否需要重新向服务器发起请求</strong>来分类，可将其分为两大类(强制缓存，对比缓存)</p>
-<p>已存在缓存数据时，仅基于强制缓存，请求数据的流程如下：<br><img src="./img/HTTP缓存/HTTP缓存2.png" alt=""></p>
-<p>已存在缓存数据时，仅基于对比缓存，请求数据的流程如下：<br><img src="./img/HTTP缓存/HTTP缓存3.png" alt=""></p>
-<p><strong>我们可以看到两类缓存规则的不同，强制缓存如果生效，不需要再和服务器发生交互，而对比缓存不管是否生效，都需要和服务端发生交互。两类缓存规则同时存在，强制缓存优先级高于对比缓存，也就是说，当执行强制缓存的规则时，如果缓存生效，直接使用缓存，不再执行对比缓存规则。</strong></p>
-<h4 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h4><p>从上文可知，强制缓存，在缓存数据未失效的情况下，可以直接使用缓存数据，那么问题来了，浏览器是<strong>如何判断缓存数据是否失效</strong>的呢？</p>
-<p>对于强制缓存来说，响应Header中会有两个字段来标明失效规则(<strong>Expires/Cache-Control</strong>)<br><img src="./img/HTTP缓存/HTTP缓存4.png" alt=""></p>
-<h4 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h4><p>Expires的值为<strong>服务端返回</strong>的到期时间，它的值为一个<strong>绝对时间</strong>的GMT格式的时间字符串。即下一次请求时，请求时间小于服务端返回的到期时间，直接使用缓存数据。不过Expires 是HTTP1.0的东西，现在默认浏览器均默认使用HTTP 1.1，所以它的作用基本忽略。</p>
-<p>另一个问题是，到期时间是由服务端生成的，但是<strong>客户端时间可能跟服务端时间有误差，这就会导致缓存命中的误差</strong>。所以HTTP1.1的版本，使用<code>Cache-Control</code>替代。</p>
-<h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h4><p><code>Cache-Control</code>是<strong>最重要</strong>的失效规则，可以说是控制HTTP缓存的最高指令(因为要不要缓存也是它说了算)</p>
-<p>主要是利用该字段的<strong>max-age</strong>值来判断，它是一个<strong>相对时间</strong>，例如<code>Cache-Control:max-age=3600</code>，代表资源的有效期是3600s。常用的取值有<code>private</code>、<code>public</code>、<code>no-cache</code>、<code>max-age</code>、<code>no-store</code>,默认为<code>private</code>。</p>
-<p><strong>private</strong> 只能被终端用户的浏览器缓存，不允许CDN等中继缓存服务器对其进行缓存</p>
-<p><strong>public</strong> 可以被所有的用户缓存，包括终端用户和CDN等中间代理服务器</p>
-<p><strong>max-age=xxx</strong> 缓存的内容将在xxx秒后失效</p>
-<p><strong>no-cache</strong> 需要使用对比缓存(协商缓存)，发送到服务器确认是否使用缓存</p>
-<p><strong>no-store</strong> 禁止使用缓存，每一次都要重新请求数据(然鹅对于前端开发来说，缓存越多越好)</p>
-<p>举个例子：<br><img src="./img/HTTP缓存/HTTP缓存12.png" alt=""></p>
-<p>图中Cache-Control仅指定了max-age，所以默认为private,缓存时间为31536000s(365天)，也就是说，在365天内再次请求这条数据，都会直接获取缓存数据库中的数据，直接使用。</p>
-<p><strong>Cache-Control和Expires可以在服务端配置同时启用，同时启用的时候Cache-Control优先级高</strong></p>
-<h4 id="对比缓存"><a href="#对比缓存" class="headerlink" title="对比缓存"></a>对比缓存</h4><p>当强缓存没有命中时，浏览器会发送一个请求到服务器，服务器根据header中的缓存标识来判断是否命中缓存。如果命中，则返回304，告诉浏览器资源未更新，可使用本地的缓存。</p>
-<p>再放一下上面的图，方便理解记忆：<br><img src="./img/HTTP缓存/HTTP缓存3.png" alt=""><br><img src="./img/HTTP缓存/HTTP缓存5.png" alt=""></p>
-<p>通过两图的对比，我们可以很清楚的发现，在对比缓存生效时，状态码为304，并且报文大小和请求时间大大减少。<br>原因是，服务端在进行标识比较后，<strong>只返回header部分</strong>，通过状态码通知客户端使用缓存，不再需要将报文主体部分返回给客户端。</p>
-<p>对于<strong>对比缓存</strong>来说，缓存标识的传递是我们着重需要理解的，它在请求header和响应header间进行传递，<br>一共分为两种标识传递，接下来，我们分开介绍。</p>
-<h4 id="Last-Modified-If-Modified-Since"><a href="#Last-Modified-If-Modified-Since" class="headerlink" title="Last-Modified / If-Modified-Since"></a>Last-Modified / If-Modified-Since</h4><h5 id="1-Last-Modified"><a href="#1-Last-Modified" class="headerlink" title="1. Last-Modified"></a>1. Last-Modified</h5><p><strong>响应头</strong>，当浏览器请求资源时，服务器返回资源的最新修改时间。<br><img src="./img/HTTP缓存/HTTP缓存6.png" alt=""></p>
-<h5 id="2-If-Modified-Since"><a href="#2-If-Modified-Since" class="headerlink" title="2.If-Modified-Since"></a>2.If-Modified-Since</h5><p><strong>请求头</strong>，资源的最新修改时间，由浏览器告诉服务器(其实就是上次服务器给的<code>Last-Modified</code>)</p>
-<p>服务器收到请求后发现有<code>If-Modified-Since</code>,则与被请求资源的<code>Last-Modified</code>进行比对。</p>
-<p>若资源的<code>Last-Modified</code>大于<code>If-Modified-Since</code>,说明 资源又被改动过，则相应整片资源内容，返回状态码<strong>200</strong></p>
-<p>若资源的<code>Last-Modified</code>小于或等于<code>If-Modified-Since</code>，说明资源无新修改，则相应HTTP<strong>304</strong>,告知浏览器继续使用所保存的cache。</p>
-<p>其实这段话很好理解，拿电影列表举个实际的例子：</p>
-<ol>
-<li>宁宁想要看最近上映了什么电影，于是浏览器向服务器请求电影列表。</li>
-<li>浏览器返回给你list并放进你的缓存，并给你这个列表的最后修改时间<code>Last-Modified</code>。</li>
-<li>浏览器保存这个<code>Last-Modified</code>的值，在之后每次请求电影列表浏览器把它的值放进<code>If-Modified-Since</code>里看看和上次相比，列表里东西有没有改变。时间没变的话，返回状态码304，我们就继续拿缓存里的，这样加载是不是就变快了~</li>
-<li>这时新电影上映了，电影院管理员小jio修改了list的内容，这样一来，这个资源的<code>Last-Modified</code>就更新了。</li>
-<li>宁宁最近想要约会，看看最近上映了什么电影，浏览器向服务器发起请求，发现资源最后修改时间改了，新加了几部电影，那缓存里的资源就不是最新的了。这时会返回状态码200，把最新的电影列表放在body里返回给你，并更新这时缓存里的资源。<br><img src="./img/HTTP缓存/HTTP缓存7.png" alt=""></li>
-</ol>
-<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h5><ol>
-<li><code>Last-Modified</code>只能精确到s，假设文件是在1s内发生改变，Last-Modified无法感知到变化。也就是说短时间内资源发生了改变，Last-Modified并不会发生变化。(极端情况)</li>
-<li>周期性变化，如果这个资源在一个周期内修改回原来的样子了 (比如上文例子里，管理员加了一部电影，后来又删了，在那之后你才请求的电影列表，相当于资源没变) ，我们认为是可以使用缓存的，而此时修改时间也变化了，就不会使用缓存内容，因此便有了ETag</li>
-</ol>
-<h4 id="Etag-If-None-Match-优先级高于Last-Modified-If-Modified-Since"><a href="#Etag-If-None-Match-优先级高于Last-Modified-If-Modified-Since" class="headerlink" title="Etag / If-None-Match(优先级高于Last-Modified / If-Modified-Since)"></a>Etag / If-None-Match(优先级高于Last-Modified / If-Modified-Since)</h4><p><strong>1.Etag</strong></p>
-<p><strong>响应头</strong>，服务器响应请求时，告诉浏览器当前资源在服务器的<strong>唯一标识</strong>(生成规则由服务器决定)，可以保证每一个资源是唯一的，资源变化都会导致ETag变化。<br><img src="./img/HTTP缓存/HTTP缓存8.png" alt=""></p>
-<p><strong>2.If-None-Match</strong><br><strong>请求头</strong>，再次请求服务器时，通过此字段通知服务器客户端缓存数据的唯一标识。</p>
-<p>服务器收到请求后发现有头If-None-Match，则与被请求资源的唯一标识进行比对。</p>
-<p>不同，说明资源又被修改过，则响应整片资源内容，返回状态码<strong>200</strong></p>
-<p>相同，说明资源无新修改，则响应HTTP<strong>304</strong>，告知浏览器继续使用所保存的cache。<br><img src="./img/HTTP缓存/HTTP缓存9.png" alt=""></p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>对于强制缓存，服务器通知浏览器一个缓存时间，在缓存时间内。下次请求，直接用缓存，不在时间内，执行比较缓存策略.</p>
-<p>对于比较缓存，将缓存信息中的Etag和Last-Modified通过请求发送服务器，由服务器校验，返回<strong>304</strong>状态码时，浏览器直接使用缓存。</p>
-<p>浏览器第一次请求：<br><img src="./img/HTTP缓存/HTTP缓存10.png" alt=""></p>
-<p>浏览器再次请求时：<br><img src="./img/HTTP缓存/HTTP缓存11.png" alt=""></p>
-<p>最后以流程图的形式总结浏览器缓存机制<br><img src="./img/HTTP缓存/HTTP缓存12.png" alt=""></p>
-<h4 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h4><p><a href="https://www.cnblogs.com/chenqf/p/6386163.html" target="_blank" rel="noopener">在介绍HTTP缓存之前，作为知识铺垫，先简单介绍一下HTTP报文</a></p>
-<p><a href="https://juejin.im/post/5c4528a6f265da611a4822cc" target="_blank" rel="noopener">实践这一次，彻底搞懂浏览器缓存机制</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1745,7 +1688,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1758,7 +1701,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

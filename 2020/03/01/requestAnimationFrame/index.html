@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="计算机网络," />
+  <meta name="keywords" content="API," />
 
 
 
@@ -79,22 +79,18 @@
 
 
 
-<meta name="description" content="一、写在前面关于三次握手的问题，我看了很多博客，但是说法不一，谢希仁著《计算机网络》第四版中，讲“三次握手”的目的是：  防止已失效的连接请求报文段又传送到服务器端，造成资源的浪费。  但实际上，这个只能算表因，并不涉及本质。 二、TCP三次握手过程TCP报文格式 字段含义    字段名 含义 作用     Seq 序列号 用来标识从TCP源端向目的端发送的字节流   ack 确认号 只有Ack标">
-<meta name="keywords" content="计算机网络">
+<meta name="description" content="一、前言最近了解到这样一个做动画的API，过往只接触过JS中用定时器实现动画，或是CSS3中实现animation或者transition来实现。那么在C3动画如此强大的今天，这个API到底有什么用呢？ requestAnimationFrame，顾名思义就是请求动画帧。在学习这个API之前，我们要先了解几个概念：  屏幕刷新频率：屏幕每秒出现图像的次数。普通笔记本为60Hz 动画原理：计算机每1">
+<meta name="keywords" content="API">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TCP为什么是三次握手四次挥手">
-<meta property="og:url" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/index.html">
+<meta property="og:title" content="requestAnimationFrame">
+<meta property="og:url" content="http://yoursite.com/2020/03/01/requestAnimationFrame/index.html">
 <meta property="og:site_name" content="Sora">
-<meta property="og:description" content="一、写在前面关于三次握手的问题，我看了很多博客，但是说法不一，谢希仁著《计算机网络》第四版中，讲“三次握手”的目的是：  防止已失效的连接请求报文段又传送到服务器端，造成资源的浪费。  但实际上，这个只能算表因，并不涉及本质。 二、TCP三次握手过程TCP报文格式 字段含义    字段名 含义 作用     Seq 序列号 用来标识从TCP源端向目的端发送的字节流   ack 确认号 只有Ack标">
+<meta property="og:description" content="一、前言最近了解到这样一个做动画的API，过往只接触过JS中用定时器实现动画，或是CSS3中实现animation或者transition来实现。那么在C3动画如此强大的今天，这个API到底有什么用呢？ requestAnimationFrame，顾名思义就是请求动画帧。在学习这个API之前，我们要先了解几个概念：  屏幕刷新频率：屏幕每秒出现图像的次数。普通笔记本为60Hz 动画原理：计算机每1">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/img/TCP连接/TCP报文格式.png">
-<meta property="og:image" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/img/TCP连接/TCP三次握手过程.png">
-<meta property="og:image" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/img/TCP连接/TCP四次挥手过程.png">
-<meta property="og:updated_time" content="2020-01-23T11:27:46.744Z">
+<meta property="og:updated_time" content="2020-03-01T11:24:28.396Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TCP为什么是三次握手四次挥手">
-<meta name="twitter:description" content="一、写在前面关于三次握手的问题，我看了很多博客，但是说法不一，谢希仁著《计算机网络》第四版中，讲“三次握手”的目的是：  防止已失效的连接请求报文段又传送到服务器端，造成资源的浪费。  但实际上，这个只能算表因，并不涉及本质。 二、TCP三次握手过程TCP报文格式 字段含义    字段名 含义 作用     Seq 序列号 用来标识从TCP源端向目的端发送的字节流   ack 确认号 只有Ack标">
-<meta name="twitter:image" content="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/img/TCP连接/TCP报文格式.png">
+<meta name="twitter:title" content="requestAnimationFrame">
+<meta name="twitter:description" content="一、前言最近了解到这样一个做动画的API，过往只接触过JS中用定时器实现动画，或是CSS3中实现animation或者transition来实现。那么在C3动画如此强大的今天，这个API到底有什么用呢？ requestAnimationFrame，顾名思义就是请求动画帧。在学习这个API之前，我们要先了解几个概念：  屏幕刷新频率：屏幕每秒出现图像的次数。普通笔记本为60Hz 动画原理：计算机每1">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/01/requestAnimationFrame/"/>
 
 
 
 
 
-  <title>TCP为什么是三次握手四次挥手 | Sora</title>
+  <title>requestAnimationFrame | Sora</title>
   
 
 
@@ -259,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/23/TCP为什么是三次握手四次挥手/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/01/requestAnimationFrame/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sora">
@@ -276,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">TCP为什么是三次握手四次挥手</h1>
+          <h1 class="post-title" itemprop="name headline">requestAnimationFrame</h1>
         
 
         <div class="post-meta">
@@ -288,8 +284,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-23T19:25:14+08:00">
-                2020-01-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-01T19:24:00+08:00">
+                2020-03-01
               </time>
             
 
@@ -326,87 +322,50 @@
       
 
       
-        <h4 id="一、写在前面"><a href="#一、写在前面" class="headerlink" title="一、写在前面"></a>一、写在前面</h4><p>关于三次握手的问题，我看了很多博客，但是说法不一，谢希仁著《计算机网络》第四版中，讲“三次握手”的目的是：</p>
-<blockquote>
-<p>防止已失效的连接请求报文段又传送到服务器端，造成资源的浪费。</p>
-</blockquote>
-<p>但实际上，这个只能算表因，并不涉及本质。</p>
-<h4 id="二、TCP三次握手过程"><a href="#二、TCP三次握手过程" class="headerlink" title="二、TCP三次握手过程"></a>二、TCP三次握手过程</h4><p><strong>TCP报文格式</strong><br><img src="./img/TCP连接/TCP报文格式.png" alt=""></p>
-<p><strong>字段含义</strong></p>
-<table>
-<thead>
-<tr>
-<th>字段名</th>
-<th>含义</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Seq</td>
-<td>序列号</td>
-<td>用来标识从TCP源端向目的端发送的字节流</td>
-</tr>
-<tr>
-<td>ack</td>
-<td>确认号</td>
-<td>只有Ack标志位为1时，确认序号字段才有效。ack = Seq + 1，若同意连接，则响应报文中应该使SYN=1，ACK=1</td>
-</tr>
-<tr>
-<td>SYN</td>
-<td>标志位</td>
-<td>在连接建立时用来同步序号。当SYN=1，ACK=0，表明是连接请求报文</td>
-</tr>
-<tr>
-<td>FIN</td>
-<td>标志位</td>
-<td>释放一个新连接,当FIN=1,表明此报文的发送方数据已经发送完毕</td>
-</tr>
-<tr>
-<td>RST</td>
-<td>标志位</td>
-<td>重置连接</td>
-</tr>
-<tr>
-<td>ACK</td>
-<td>标志位</td>
-<td>仅当ACK=1时，确认号字段才有效</td>
-</tr>
-<tr>
-<td>URG</td>
-<td>标志位</td>
-<td>表明紧急指针有效，告诉系统此报文段中有紧急数据</td>
-</tr>
-<tr>
-<td>PSH</td>
-<td>标志位</td>
-<td>接收方应该尽快将这个报文交给应用层</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>注意：</p>
-<ol>
-<li>不要将确认序号ack与标志位中的ACK搞混</li>
-<li>确认方Ack=发起方Seq+1，两端配对</li>
-</ol>
-</blockquote>
-<p><strong>三次握手过程</strong><br><img src="./img/TCP连接/TCP三次握手过程.png" alt=""></p>
-<h4 id="三、为什么TCP需要握手这个操作"><a href="#三、为什么TCP需要握手这个操作" class="headerlink" title="三、为什么TCP需要握手这个操作"></a>三、为什么TCP需要握手这个操作</h4><p>在解答为什么TCP需要三次握手，而不是两次之前，首先需要回答的问题是：<strong>为什么需要握手这个操作，能不能不握手？</strong></p>
-<p>这里引出了TCP和UDP的一个基本区别：TCP是可靠通信协议，而UDP是不可靠通信协议。</p>
+        <h4 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h4><p>最近了解到这样一个做动画的API，过往只接触过JS中用定时器实现动画，或是CSS3中实现<code>animation</code>或者<code>transition</code>来实现。那么在C3动画如此强大的今天，这个API到底有什么用呢？</p>
+<p>requestAnimationFrame，顾名思义就是<strong>请求动画帧</strong>。在学习这个API之前，我们要先了解几个概念：</p>
 <ul>
-<li>TCP的可靠性含义：接收方收到的数是<strong>完整</strong>、<strong>有序</strong>、<strong>无差错</strong>的。</li>
-<li>UDP不可靠性含义：接收方接收到的数据可能存在部分丢失，顺序也不一定能保证。</li>
+<li><strong>屏幕刷新频率</strong>：屏幕每秒出现图像的次数。普通笔记本为60Hz</li>
+<li><strong>动画原理</strong>：计算机每16.7ms刷新一次，由于人眼的视觉停留效应，所以看起来是流畅的移动。</li>
 </ul>
-<p><strong>TCP可靠传输的精髓</strong></p>
-<p>TCP协议为了实现可靠传输，通信双方需要判断自己已经发送的数据包是否都被接收方收到，如果没收到，就需要重新发送。因此，为了实现这个需求。就引出<strong>序号Seq</strong>和<strong>确认号Ack</strong>的使用。</p>
-<p>发送方在发送数据包(假设大小为10byte)，同时会发送一个<strong>序列号</strong>(假设为500)，那么接收方收到这个数据包以后，就回复一个<strong>确认号</strong>(500+10=510),告诉发送方：“我已经收到了你的数据包，你可以发送下一个数据包，序号从510开始。”</p>
-<p>这样发送方就可以知道哪些数据被接收到，哪些数据没被接收到，需要重发。</p>
-<h4 id="四、为什么TCP是三次握手？"><a href="#四、为什么TCP是三次握手？" class="headerlink" title="四、为什么TCP是三次握手？"></a>四、为什么TCP是三次握手？</h4><p>总结上文内容，一句话概括，<strong>TCP连接握手，握的是什么？</strong></p>
-<p><strong>是通信双方数据原点的序列号！</strong></p>
-<h4 id="五、为什么TCP是四次挥手"><a href="#五、为什么TCP是四次挥手" class="headerlink" title="五、为什么TCP是四次挥手"></a>五、为什么TCP是四次挥手</h4><p>因为服务端在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和FIN放在一个报文中发送给客户端。而关闭连接时，当收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据。此时，服务端也未必将全部数据都发送给对方了。所以我们可以不必立即close，也可以发送一些数据，再发送FIN报文给对方来表示同意现在关闭连接。所以在关闭连接时，FIN和ACK是分开发送的。<br><img src="./img/TCP连接/TCP四次挥手过程.png" alt=""></p>
-<p><a href="https://www.zhihu.com/question/24853633" target="_blank" rel="noopener">参考的是知乎的回答</a></p>
-<p>图源自网络，侵删道歉</p>
+<p>我们使用setTimeout制作动画时，是通过设定间隔时间来不断改变图像位置，从而达到动画的效果。但是很容易出现卡顿、抖动的现象。原因是：</p>
+<ol>
+<li>setTimeout被放入异步队列，当主线程空闲并且当设置的时间到达时，才会执行。因此实际执行时间总是比设定时间要晚。这一部分涉及到JS事件循环的知识，这里不再扩展。</li>
+<li>刷新频率受屏幕分辨率和屏幕尺寸的影响。因此不同设备的刷新频率不同。setTimeout设置的时间间隔不一定和屏幕刷新时间相同，会引起丢帧。</li>
+</ol>
+<p>归纳一点最关键的问题：<strong>开发者并不知道下一刻绘制动画的最佳时机是什么时候。</strong></p>
+<h4 id="三、使用优势"><a href="#三、使用优势" class="headerlink" title="三、使用优势"></a>三、使用优势</h4><ol>
+<li><strong>CPU节能</strong></li>
+</ol>
+<p>使用setTimeout实现的动画，当页面被隐藏或者最小化时，setTimeout仍然会在后台执行动画任务，由于此时页面处于不可见或不可用状态，刷新动画是没有意义的，完全是浪费CPU资源。</p>
+<p>而requestAnimationFrame，当页面处于未激活的状态下，该页面的屏幕刷新任务也会被系统暂停，因此跟着系统系统走的requestAnimationFrame也会停止渲染，当页面被激活时，动画就从上次停留的地方继续执行，有效节省了CPU、GPU和内存的使用。</p>
+<p>不过有一点需要注意，requestAnimationFrame是在主线程上完成的。这意味着，如果主线程非常繁忙，requestAnimationFrame的动画效果会大打折扣。</p>
+<ol start="2">
+<li><strong>函数节流</strong></li>
+</ol>
+<p>在高频率事件(resize,scroll等)中，为了防止在一个刷新间隔内发生多次函数执行，使用requestAnimationFrame可保证每个刷新间隔内，函数只被执行一次，这样既能保证流畅性，也能更好的节省函数执行的开销。</p>
+<h4 id="三、How-to-use"><a href="#三、How-to-use" class="headerlink" title="三、How to use?"></a>三、How to use?</h4><ol>
+<li>语法<blockquote>
+<p>window.requestAnimationFrame(callback);</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>参数</li>
+</ul>
+<p><code>callback</code></p>
+<p>requestAnimationFrame接受一个回调函数作为参数。这个回调函数会在浏览器重绘之前调用。</p>
+<ul>
+<li>返回值</li>
+</ul>
+<p><code>requestID = requestAnimationFrame(callback)</code></p>
+<p>返回一个整数，表示定时器的编号。这个值作为参数可传递给<code>cancelAnimationFrame</code>用于取消这个函数的执行。</p>
+<ol start="2">
+<li>实践<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        #e&#123;</span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background: red;</span><br><span class="line">            position: absolute;</span><br><span class="line">            left: 0;</span><br><span class="line">            top: 0;</span><br><span class="line">            zoom: 1;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;e&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">        var e = document.getElementById(&quot;e&quot;);</span><br><span class="line">        var flag = true;</span><br><span class="line">        var left = 0;</span><br><span class="line">    </span><br><span class="line">        function render() &#123;</span><br><span class="line">            if(flag == true)&#123;</span><br><span class="line">                if(left&gt;=100)&#123;</span><br><span class="line">                    flag = false</span><br><span class="line">                &#125;</span><br><span class="line">                e.style.left = ` $&#123;left++&#125;px`</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                if(left&lt;=0)&#123;</span><br><span class="line">                    flag = true</span><br><span class="line">                &#125;</span><br><span class="line">                e.style.left = ` $&#123;left--&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        //requestAnimationFrame效果</span><br><span class="line">        //感觉有点类似于递归调用？</span><br><span class="line">        (function animloop() &#123;</span><br><span class="line">            render();</span><br><span class="line">            window.requestAnimationFrame(animloop);</span><br><span class="line">        &#125;)();</span><br><span class="line">    </span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="四、参考博客与结尾碎碎念"><a href="#四、参考博客与结尾碎碎念" class="headerlink" title="四、参考博客与结尾碎碎念"></a>四、参考博客与结尾碎碎念</h4><p><a href="https://blog.csdn.net/vhwfr2u02q/article/details/79492303" target="_blank" rel="noopener">深入理解requestAnimationFrame</a></p>
+<p>明天就要开始上网课了，太难了，想回学校吃夜宵。</p>
 
       
     </div>
@@ -424,7 +383,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+            <a href="/tags/API/" rel="tag"># API</a>
           
         </div>
       
@@ -437,8 +396,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/21/typeof和instanceof/" rel="next" title="typeof和instanceof">
-                <i class="fa fa-chevron-left"></i> typeof和instanceof
+              <a href="/2020/02/28/撸一个Babel-从原理到实践/" rel="next" title="撸一个Babel(从原理到实践)">
+                <i class="fa fa-chevron-left"></i> 撸一个Babel(从原理到实践)
               </a>
             
           </div>
@@ -446,10 +405,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/27/XSS攻击/" rel="prev" title="XSS攻击">
-                XSS攻击 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -572,7 +527,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、写在前面"><span class="nav-number">1.</span> <span class="nav-text">一、写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、TCP三次握手过程"><span class="nav-number">2.</span> <span class="nav-text">二、TCP三次握手过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、为什么TCP需要握手这个操作"><span class="nav-number">3.</span> <span class="nav-text">三、为什么TCP需要握手这个操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、为什么TCP是三次握手？"><span class="nav-number">4.</span> <span class="nav-text">四、为什么TCP是三次握手？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、为什么TCP是四次挥手"><span class="nav-number">5.</span> <span class="nav-text">五、为什么TCP是四次挥手</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、前言"><span class="nav-number">1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、使用优势"><span class="nav-number">2.</span> <span class="nav-text">三、使用优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、How-to-use"><span class="nav-number">3.</span> <span class="nav-text">三、How to use?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、参考博客与结尾碎碎念"><span class="nav-number">4.</span> <span class="nav-text">四、参考博客与结尾碎碎念</span></a></li></ol></div>
             
 
           </div>

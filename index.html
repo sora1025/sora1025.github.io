@@ -251,6 +251,169 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/01/requestAnimationFrame/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/01/requestAnimationFrame/" itemprop="url">requestAnimationFrame</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-01T19:24:00+08:00">
+                2020-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h4><p>最近了解到这样一个做动画的API，过往只接触过JS中用定时器实现动画，或是CSS3中实现<code>animation</code>或者<code>transition</code>来实现。那么在C3动画如此强大的今天，这个API到底有什么用呢？</p>
+<p>requestAnimationFrame，顾名思义就是<strong>请求动画帧</strong>。在学习这个API之前，我们要先了解几个概念：</p>
+<ul>
+<li><strong>屏幕刷新频率</strong>：屏幕每秒出现图像的次数。普通笔记本为60Hz</li>
+<li><strong>动画原理</strong>：计算机每16.7ms刷新一次，由于人眼的视觉停留效应，所以看起来是流畅的移动。</li>
+</ul>
+<p>我们使用setTimeout制作动画时，是通过设定间隔时间来不断改变图像位置，从而达到动画的效果。但是很容易出现卡顿、抖动的现象。原因是：</p>
+<ol>
+<li>setTimeout被放入异步队列，当主线程空闲并且当设置的时间到达时，才会执行。因此实际执行时间总是比设定时间要晚。这一部分涉及到JS事件循环的知识，这里不再扩展。</li>
+<li>刷新频率受屏幕分辨率和屏幕尺寸的影响。因此不同设备的刷新频率不同。setTimeout设置的时间间隔不一定和屏幕刷新时间相同，会引起丢帧。</li>
+</ol>
+<p>归纳一点最关键的问题：<strong>开发者并不知道下一刻绘制动画的最佳时机是什么时候。</strong></p>
+<h4 id="三、使用优势"><a href="#三、使用优势" class="headerlink" title="三、使用优势"></a>三、使用优势</h4><ol>
+<li><strong>CPU节能</strong></li>
+</ol>
+<p>使用setTimeout实现的动画，当页面被隐藏或者最小化时，setTimeout仍然会在后台执行动画任务，由于此时页面处于不可见或不可用状态，刷新动画是没有意义的，完全是浪费CPU资源。</p>
+<p>而requestAnimationFrame，当页面处于未激活的状态下，该页面的屏幕刷新任务也会被系统暂停，因此跟着系统系统走的requestAnimationFrame也会停止渲染，当页面被激活时，动画就从上次停留的地方继续执行，有效节省了CPU、GPU和内存的使用。</p>
+<p>不过有一点需要注意，requestAnimationFrame是在主线程上完成的。这意味着，如果主线程非常繁忙，requestAnimationFrame的动画效果会大打折扣。</p>
+<ol start="2">
+<li><strong>函数节流</strong></li>
+</ol>
+<p>在高频率事件(resize,scroll等)中，为了防止在一个刷新间隔内发生多次函数执行，使用requestAnimationFrame可保证每个刷新间隔内，函数只被执行一次，这样既能保证流畅性，也能更好的节省函数执行的开销。</p>
+<h4 id="三、How-to-use"><a href="#三、How-to-use" class="headerlink" title="三、How to use?"></a>三、How to use?</h4><ol>
+<li>语法<blockquote>
+<p>window.requestAnimationFrame(callback);</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>参数</li>
+</ul>
+<p><code>callback</code></p>
+<p>requestAnimationFrame接受一个回调函数作为参数。这个回调函数会在浏览器重绘之前调用。</p>
+<ul>
+<li>返回值</li>
+</ul>
+<p><code>requestID = requestAnimationFrame(callback)</code></p>
+<p>返回一个整数，表示定时器的编号。这个值作为参数可传递给<code>cancelAnimationFrame</code>用于取消这个函数的执行。</p>
+<ol start="2">
+<li>实践<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        #e&#123;</span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background: red;</span><br><span class="line">            position: absolute;</span><br><span class="line">            left: 0;</span><br><span class="line">            top: 0;</span><br><span class="line">            zoom: 1;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;e&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">        var e = document.getElementById(&quot;e&quot;);</span><br><span class="line">        var flag = true;</span><br><span class="line">        var left = 0;</span><br><span class="line">    </span><br><span class="line">        function render() &#123;</span><br><span class="line">            if(flag == true)&#123;</span><br><span class="line">                if(left&gt;=100)&#123;</span><br><span class="line">                    flag = false</span><br><span class="line">                &#125;</span><br><span class="line">                e.style.left = ` $&#123;left++&#125;px`</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                if(left&lt;=0)&#123;</span><br><span class="line">                    flag = true</span><br><span class="line">                &#125;</span><br><span class="line">                e.style.left = ` $&#123;left--&#125;px`</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        //requestAnimationFrame效果</span><br><span class="line">        //感觉有点类似于递归调用？</span><br><span class="line">        (function animloop() &#123;</span><br><span class="line">            render();</span><br><span class="line">            window.requestAnimationFrame(animloop);</span><br><span class="line">        &#125;)();</span><br><span class="line">    </span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="四、参考博客与结尾碎碎念"><a href="#四、参考博客与结尾碎碎念" class="headerlink" title="四、参考博客与结尾碎碎念"></a>四、参考博客与结尾碎碎念</h4><p><a href="https://blog.csdn.net/vhwfr2u02q/article/details/79492303" target="_blank" rel="noopener">深入理解requestAnimationFrame</a></p>
+<p>明天就要开始上网课了，太难了，想回学校吃夜宵。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/撸一个Babel-从原理到实践/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1719,136 +1882,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/只出现一次的数字/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="sora">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sora">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/01/10/只出现一次的数字/" itemprop="url">只出现一次的数字</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-10T15:09:50+08:00">
-                2020-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素</p>
-<p>示例1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[2,2,1]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure></p>
-<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><p>看到这道题目，脑子里第一个想的就是循环比较，但是看了题解，发现异或这种做法。</p>
-<p>异或运算符主要是在位运算时使用，也可以用于十进制数，但其实中间有一个转换过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let a = 1^2 //3</span><br><span class="line">//转换过程</span><br><span class="line">//1 -&gt; 01</span><br><span class="line">//2 -&gt; 10</span><br><span class="line">//1^2 -&gt; 11 -&gt;3</span><br></pre></td></tr></table></figure></p>
-<p>关于异或这种解法，首先有几个数学知识要掌握：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 交换律：a^b^c &lt;=&gt; a^c^b</span><br><span class="line">2. 任何数异或0为任何数：n^0 &lt;=&gt; n</span><br><span class="line">3. 相同数异或为0: n^n</span><br></pre></td></tr></table></figure></p>
-<p>掌握了这些知识，这道题就迎刃而解了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @param &#123;number[]&#125; nums</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> */</span><br><span class="line">var singleNumber = function(nums) &#123;</span><br><span class="line">    let res = 0;    //0与任何数异或为任何数</span><br><span class="line">    for(let i = 0;i&lt;nums.length;i++)&#123;</span><br><span class="line">        res^=nums[i]; //如果之后出现相同的数结果就会为0，继续进行异或操作</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1894,7 +1932,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1907,7 +1945,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

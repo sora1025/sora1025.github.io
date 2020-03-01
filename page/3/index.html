@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="计算机网络," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,34 +79,13 @@
 
 
 
-<meta name="description" content="前言Web 缓存大致可以分为：数据库缓存、服务器端缓存（代理服务器缓存、CDN 缓存）、浏览器缓存。 浏览器缓存也包含很多内容： HTTP 缓存、indexDB、cookie、localstorage 等等。这里我们只讨论 HTTP 缓存相关内容。HTTP缓存机制是web性能优化的重要手段。 什么是浏览器缓存简单来说，浏览器缓存其实就是浏览器保存通过HTTP获取的所有资源，是浏览器将网络资源存储在">
-<meta name="keywords" content="计算机网络">
-<meta property="og:type" content="article">
-<meta property="og:title" content="HTTP缓存">
-<meta property="og:url" content="http://yoursite.com/2019/03/30/HTTP缓存/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sora">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
 <meta property="og:site_name" content="Sora">
-<meta property="og:description" content="前言Web 缓存大致可以分为：数据库缓存、服务器端缓存（代理服务器缓存、CDN 缓存）、浏览器缓存。 浏览器缓存也包含很多内容： HTTP 缓存、indexDB、cookie、localstorage 等等。这里我们只讨论 HTTP 缓存相关内容。HTTP缓存机制是web性能优化的重要手段。 什么是浏览器缓存简单来说，浏览器缓存其实就是浏览器保存通过HTTP获取的所有资源，是浏览器将网络资源存储在">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存0.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存1.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存2.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存3.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存4.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存12.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存3.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存5.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存6.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存7.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存8.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存9.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存10.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存11.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存12.png">
-<meta property="og:updated_time" content="2020-02-02T17:01:51.838Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTP缓存">
-<meta name="twitter:description" content="前言Web 缓存大致可以分为：数据库缓存、服务器端缓存（代理服务器缓存、CDN 缓存）、浏览器缓存。 浏览器缓存也包含很多内容： HTTP 缓存、indexDB、cookie、localstorage 等等。这里我们只讨论 HTTP 缓存相关内容。HTTP缓存机制是web性能优化的重要手段。 什么是浏览器缓存简单来说，浏览器缓存其实就是浏览器保存通过HTTP获取的所有资源，是浏览器将网络资源存储在">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/30/HTTP缓存/img/HTTP缓存/HTTP缓存0.png">
+<meta name="twitter:title" content="Sora">
 
 
 
@@ -136,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/30/HTTP缓存/"/>
+  <link rel="canonical" href="http://yoursite.com/page/3/"/>
 
 
 
 
 
-  <title>HTTP缓存 | Sora</title>
+  <title>Sora</title>
   
 
 
@@ -161,7 +140,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -256,9 +236,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -288,7 +268,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTP缓存</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/30/HTTP缓存/" itemprop="url">HTTP缓存</a></h1>
         
 
         <div class="post-meta">
@@ -338,7 +320,9 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>Web 缓存大致可以分为：数据库缓存、服务器端缓存（代理服务器缓存、CDN 缓存）、浏览器缓存。</p>
+        
+          
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>Web 缓存大致可以分为：数据库缓存、服务器端缓存（代理服务器缓存、CDN 缓存）、浏览器缓存。</p>
 <p>浏览器缓存也包含很多内容： HTTP 缓存、indexDB、cookie、localstorage 等等。这里我们只讨论 HTTP 缓存相关内容。<br>HTTP缓存机制是web性能优化的重要手段。</p>
 <h4 id="什么是浏览器缓存"><a href="#什么是浏览器缓存" class="headerlink" title="什么是浏览器缓存"></a>什么是浏览器缓存</h4><p><img src="./img/HTTP缓存/HTTP缓存0.png" alt=""><br>简单来说，浏览器缓存其实就是浏览器保存通过HTTP获取的所有资源，是浏览器将网络资源存储在本地的一种行为。</p>
 <h4 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h4><p>HTTP报文是浏览器和服务器间通信时发送及响应的数据块。浏览器向服务器请求数据，发送请求(request)报文；服务器向浏览器返回数据，返回响应(response)报文。</p>
@@ -402,6 +386,8 @@
 <h4 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h4><p><a href="https://www.cnblogs.com/chenqf/p/6386163.html" target="_blank" rel="noopener">在介绍HTTP缓存之前，作为知识铺垫，先简单介绍一下HTTP报文</a></p>
 <p><a href="https://juejin.im/post/5c4528a6f265da611a4822cc" target="_blank" rel="noopener">实践这一次，彻底搞懂浏览器缓存机制</a></p>
 
+          
+        
       
     </div>
     
@@ -416,36 +402,14 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/05/vue-bus/" rel="prev" title="vue传值之bus">
-                vue传值之bus <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -455,11 +419,14 @@
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
 
 
           </div>
@@ -467,10 +434,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -491,17 +454,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -552,22 +506,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是浏览器缓存"><span class="nav-number">2.</span> <span class="nav-text">什么是浏览器缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP报文"><span class="nav-number">3.</span> <span class="nav-text">HTTP报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存规则解析"><span class="nav-number">4.</span> <span class="nav-text">缓存规则解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强制缓存"><span class="nav-number">5.</span> <span class="nav-text">强制缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Expires"><span class="nav-number">6.</span> <span class="nav-text">Expires</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cache-Control"><span class="nav-number">7.</span> <span class="nav-text">Cache-Control</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对比缓存"><span class="nav-number">8.</span> <span class="nav-text">对比缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Last-Modified-If-Modified-Since"><span class="nav-number">9.</span> <span class="nav-text">Last-Modified / If-Modified-Since</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Last-Modified"><span class="nav-number">9.1.</span> <span class="nav-text">1. Last-Modified</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-If-Modified-Since"><span class="nav-number">9.2.</span> <span class="nav-text">2.If-Modified-Since</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点："><span class="nav-number">9.3.</span> <span class="nav-text">缺点：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Etag-If-None-Match-优先级高于Last-Modified-If-Modified-Since"><span class="nav-number">10.</span> <span class="nav-text">Etag / If-None-Match(优先级高于Last-Modified / If-Modified-Since)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考博客"><span class="nav-number">12.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -708,10 +646,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
