@@ -251,6 +251,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/06/React系列学习之一todolist/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/06/React系列学习之一todolist/" itemprop="url">React系列学习之一todolist</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-06T20:25:59+08:00">
+                2020-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h4><p>最近开始学习React了，学过Vue以后，掌握React的写法并不是一件难事，最近会写系列文章更新自己在学习React过程的收获。</p>
+<p>我个人是比较喜欢边学边做的。所以本篇文章由搭建项目开始，边实现简单的todolist边了解一些React的基本概念。(万物起源todolist)</p>
+<p><a href="https://react.docschina.org/" target="_blank" rel="noopener">React中文文档</a></p>
+<h4 id="二、使用脚手架搭建一个React项目"><a href="#二、使用脚手架搭建一个React项目" class="headerlink" title="二、使用脚手架搭建一个React项目"></a>二、使用脚手架搭建一个React项目</h4><p>如同vue有官方提供的脚手架<code>vue-cli</code>之外，React官方也提供了脚手架工具<code>create-react-app</code>。</p>
+<p><strong>全局安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g create-react-app</span><br></pre></td></tr></table></figure></p>
+<p><strong>创建项目</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create-react-app todo</span><br></pre></td></tr></table></figure></p>
+<p>在创建项目的时候，真的是花了特别久的时间，不过那个提示也说take a couple of minutes了，emmm，然后我去下了个淘宝镜像，速度才有所提升。</p>
+<p><strong>运行项目</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure></p>
+<p>这里有一个小插曲，运行时报了错，查看是webpack版本问题，然后又去下载了指定版本的webpack，另外webpack4.x以上需要安装webpack-cli，而且现在webpack不是全局安装，我还没去深究原因，之后会去了解。</p>
+<h4 id="三、组件"><a href="#三、组件" class="headerlink" title="三、组件"></a>三、组件</h4><p><strong>src/index.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//加载一个App文件，这个App就是一个组件</span><br><span class="line">import App from &apos;./App&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>src/App.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import React , &#123; Component &#125; from &apos;react&apos;</span><br><span class="line"></span><br><span class="line">class App extends React.Component&#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">        return&#123;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                Hello World!</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><code>{ Component }</code>等价于<code>React.Component</code></li>
+<li>定义一个类<code>App</code>，继承<code>React.Component</code>的类。当一个类继承了<code>React.Component</code>的类的时候，它就是一个组件了。</li>
+<li><code>render</code>函数返回什么，这个组件就展示什么内容。</li>
+</ol>
+<p><strong>src/index.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import ReactDOM from &apos;react-dom&apos;;</span><br><span class="line">import App from &apos;./App&apos;;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(&lt;App /&gt;, document.getElementById(&apos;root&apos;));</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><code>ReactDOM.render()</code>在做什么？<strong>答：把一个组件挂载到一个DOM节点上。</strong></li>
+</ol>
+<p>假设HTML文件某处有一个div<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id = &quot;root&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>想要将一个元素渲染到根DOM节点中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const element = &lt;h1&gt;Hello,world&lt;/h1&gt;;</span><br><span class="line">ReactDOM.render(element,document.getElementById(&apos;root&apos;);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>在实践中，大多数React应用只会调用一次<code>ReactDOM.render()</code>。</p>
+</blockquote>
+<h4 id="四、JSX"><a href="#四、JSX" class="headerlink" title="四、JSX"></a>四、JSX</h4><p>在上面的代码中，我们会看到一些奇怪的代码写法，例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(&lt;App /&gt;, document.getElementById(&apos;root&apos;));</span><br></pre></td></tr></table></figure></p>
+<p><strong>在React中，在JS写HTML标签，就是JSX语法</strong>。有几点要注意：</p>
+<ol>
+<li><p>在JSX语法中，如果要使用自己创建的组件，组件开头必须用大写字母开头。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//这种写法会报错</span><br><span class="line">import app from &apos;./App&apos;</span><br><span class="line">ReactDOM.render(&lt;app /&gt;, document.getElementById(&apos;root&apos;));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为了便于阅读，有时会将JSX拆分多行，官方建议将内容包裹在括号中。</p>
+<blockquote>
+<p>虽然这样做不是强制要求的，但是这可以避免遇到自动插入分号陷阱。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const element = (</span><br><span class="line">    &lt;h1&gt;</span><br><span class="line">        Hello,world!</span><br><span class="line">    &lt;/h1&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ol>
+<h4 id="五、该动手写一个todo了"><a href="#五、该动手写一个todo了" class="headerlink" title="五、该动手写一个todo了"></a>五、该动手写一个todo了</h4><p>关于给DOM添加事件，列表渲染什么的就不提了，还是可以参阅<a href="https://react.docschina.org/" target="_blank" rel="noopener">官方文档</a>，这里就直接上代码吧。相信写过一遍，就会对React的写法有一个简单的认识了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Fragment &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class App extends React.Component&#123;</span><br><span class="line">  constructor(props)&#123;</span><br><span class="line">    super(props)</span><br><span class="line">    this.state = &#123;</span><br><span class="line">      inputVal:&apos;&apos;,</span><br><span class="line">      list:[&apos;等电话啊等电话&apos;,&apos;学习React&apos;,&apos;睡觉&apos;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    return(</span><br><span class="line">      &lt;Fragment&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;input</span><br><span class="line">            value = &#123;this.state.inputVal&#125;</span><br><span class="line">            onChange = &#123;this.handleInputChange.bind(this)&#125;</span><br><span class="line">            /&gt;</span><br><span class="line">            &lt;button onClick = &#123;this.handleBtnClick.bind(this)&#125;&gt;提交&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">          &#123;</span><br><span class="line">            this.state.list.map((item,index)=&gt;&#123;</span><br><span class="line">              return(</span><br><span class="line">                &lt;li</span><br><span class="line">                  onClick = &#123;this.handleItemDelete.bind(this,index)&#125;</span><br><span class="line">                  key = &#123;index&#125;&gt;</span><br><span class="line">                    &#123;item&#125;</span><br><span class="line">                &lt;/li&gt;</span><br><span class="line">              )</span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">      &lt;/Fragment&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleInputChange(e)&#123;</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      inputVal: e.target.value</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleBtnClick()&#123;</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      list:[...this.state.list,this.state.inputVal],</span><br><span class="line">      inputVal:&apos;&apos;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleItemDelete(index)&#123;</span><br><span class="line">    const list = [...this.state.list];</span><br><span class="line">    list.splice(index,1);</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      list</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App;</span><br></pre></td></tr></table></figure></p>
+<p>贴上实现图：</p>
+<p><img src="./img/React/todo1/实现.png" alt=""></p>
+<h4 id="六、参考博客"><a href="#六、参考博客" class="headerlink" title="六、参考博客"></a>六、参考博客</h4><p>这篇文章也是跟着别人的文章敲的，主要自己整理清楚了一些不懂的知识点，继续努力。</p>
+<p><a href="https://www.jianshu.com/p/43fe2f7f7f40" target="_blank" rel="noopener">react入门学习实现一个TodoList</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/01/requestAnimationFrame/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1742,146 +1904,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/15/原生JS实现AJAX详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="sora">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sora">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/01/15/原生JS实现AJAX详解/" itemprop="url">原生JS实现AJAX详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-15T19:09:32+08:00">
-                2020-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="一、什么是AJAX"><a href="#一、什么是AJAX" class="headerlink" title="一、什么是AJAX"></a>一、什么是AJAX</h4><p>Ajax是一种异步请求数据的web开发技术，在不需要刷新页面的情况下，Ajax通过异步请求加载后台数据，并在网页上呈现出来。</p>
-<h4 id="二、AJAX使用场景"><a href="#二、AJAX使用场景" class="headerlink" title="二、AJAX使用场景"></a>二、AJAX使用场景</h4><ol>
-<li>局部刷新</li>
-<li>表单验证(最初的设计目的)</li>
-<li>无刷新动态获取数据</li>
-</ol>
-<h4 id="三、使用AJAX请求数据流程"><a href="#三、使用AJAX请求数据流程" class="headerlink" title="三、使用AJAX请求数据流程"></a>三、使用AJAX请求数据流程</h4><ol>
-<li>创建一个AJAX对象xhr</li>
-<li>打开地址</li>
-<li>发送</li>
-<li>等待响应数据</li>
-<li>回调函数处理</li>
-</ol>
-<h4 id="四、AJAX的状态有哪些"><a href="#四、AJAX的状态有哪些" class="headerlink" title="四、AJAX的状态有哪些"></a>四、AJAX的状态有哪些</h4><p>0-未初始化，尚未调用open()方法</p>
-<p>1-启动，调用send()方法，正在发送请求</p>
-<p>2-发送，已调用send()方法，已接受到响应</p>
-<p>3-解析，正在解析响应数据</p>
-<p>4-完成，响应数据解析完成，客户端可以调用<br><code>xhr.readyState == 4</code></p>
-<h4 id="五、封装AJAX"><a href="#五、封装AJAX" class="headerlink" title="五、封装AJAX"></a>五、封装AJAX</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">function myAjax(options)&#123;</span><br><span class="line">  //调用函数时如果options没有指定，就给它赋值&#123;&#125;，一个空的Object</span><br><span class="line">  options = options || &#123;&#125;; </span><br><span class="line">  //请求格式GET、POST，默认为GET</span><br><span class="line">  options.type = (options.type || &quot;GET&quot;).toUpperCase();</span><br><span class="line">  //响应数据格式，默认json</span><br><span class="line">  options.dataType = options.dataType || &quot;json&quot;</span><br><span class="line">  let params = formatParams(options.data);</span><br><span class="line">  let xhr;</span><br><span class="line">  if(window.XMLHttpRequest)&#123;</span><br><span class="line">    xhr = new XMLHttpRequest();</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    //兼容IE6以下版本</span><br><span class="line">    xhr = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if(options.type == &quot;GET&quot;)&#123;</span><br><span class="line">    //参数3是布尔值，默认是false异步，true同步</span><br><span class="line">    xhr.open(&quot;GET&quot;,options.url+&quot;?&quot;+params);</span><br><span class="line">    xhr.send(null);</span><br><span class="line">  &#125;else if(options.type == &quot;POST&quot;)&#123;</span><br><span class="line">    xhr.open(&quot;POST&quot;,options.url);</span><br><span class="line">    //设置表单提交时的内容类型</span><br><span class="line">    xhr.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);</span><br><span class="line">    xhr.send(params);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  //设置有效时间</span><br><span class="line">  setTimeout(function()&#123;</span><br><span class="line">    if(xhr.readystate != 4)&#123;</span><br><span class="line">      xhr.abort()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,options.timeout)</span><br><span class="line"></span><br><span class="line">  //接收</span><br><span class="line">  xhr.onreadystatechange = function()&#123;</span><br><span class="line">    if(xhr.readystate == 4)&#123;</span><br><span class="line">      let status = xhr.status;</span><br><span class="line">      if(status&gt;=200 &amp;&amp; status&lt;= 300)&#123;</span><br><span class="line">        options.sucess(xhr.responseText,xhr.responseXML);</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">        options.error(status)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  //格式化请求参数</span><br><span class="line">  function formatParams(data)&#123;</span><br><span class="line">    let arr = [];</span><br><span class="line">    for(var name in data)&#123;</span><br><span class="line">      arr.push(encodeURIComponent(name)+&quot;=&quot;+encodeURIComponent(data[name]));</span><br><span class="line">    &#125;</span><br><span class="line">    arr.push((&quot;v=&quot;+Math.random()).replace(&quot;.&quot;,&quot;&quot;));</span><br><span class="line">    return arr.join(&quot;&amp;&quot;);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="六、使用实例"><a href="#六、使用实例" class="headerlink" title="六、使用实例"></a>六、使用实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">myAjax(&#123;</span><br><span class="line">        url:&quot;http://server-name/login&quot;,</span><br><span class="line">        type:&apos;post&apos;,</span><br><span class="line">        data:&#123;</span><br><span class="line">            username:&apos;username&apos;,</span><br><span class="line">            password:&apos;password&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        dataType:&apos;json&apos;,</span><br><span class="line">        timeout:10000,</span><br><span class="line">        contentType:&quot;application/json&quot;,</span><br><span class="line">        success:function(data)&#123;</span><br><span class="line">　　　　　　。。。。。。//服务器返回响应，根据响应结果，分析是否登录成功</span><br><span class="line">        &#125;,</span><br><span class="line">        //异常处理</span><br><span class="line">        error:function(e)&#123;</span><br><span class="line">            console.log(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-<p>搬运博客：<a href="https://www.cnblogs.com/qing-5/p/11368009.html" target="_blank" rel="noopener">原生JS实现AJAX封装</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1932,7 +1954,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1945,7 +1967,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
