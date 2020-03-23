@@ -251,6 +251,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Connect中间件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sora">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sora">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/16/Connect中间件/" itemprop="url">Connect中间件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-16T15:51:37+08:00">
+                2019-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h4><p>最近初学Node.js，对于一些概念可能不是很了解。本篇博客的代码来源于《了不起的Node.js》和网上部分博客，还有自己一些自己的理解。如果文章有错误，还请指正。</p>
+<h4 id="理解connect"><a href="#理解connect" class="headerlink" title="理解connect"></a>理解connect</h4><p>connect是一个基于HTTP服务器的工具集，它提供了一个新的组织代码的方式与请求(request)和响应(response)对象进行交互，称为中间件。在之前的学习中，使用http创建服务器接收请求时，所有的响应都要写在一个回调函数中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//举个书上的栗子</span><br><span class="line">//这里只写创建服务器的回调函数</span><br><span class="line">var server = http.createServer(function(req,res)&#123;</span><br><span class="line">   if(&apos;GET&apos; == req.method &amp;&amp; &apos;/imgs&apos; == req.url.substr(0,5))&#123;</span><br><span class="line">     fs.stat(__dirname + req.url, function(err,stat)&#123;</span><br><span class="line">       if(err || !stat.isFile())&#123;</span><br><span class="line">         res.writeHead(404);</span><br><span class="line">         res.end(&apos;Not found&apos;);</span><br><span class="line">         return;</span><br><span class="line">       &#125;</span><br><span class="line">       server(__dirname + req.url, &apos;aplication.jpg&apos;)</span><br><span class="line">     &#125;)</span><br><span class="line">   &#125;else if(&apos;GET&apos; == req.method &amp;&amp; &apos;/&apos; == req.url)&#123;</span><br><span class="line">     serve(__dirname + &apos;/index.html&apos;, &apos;text/html&apos;)</span><br><span class="line">   &#125;else&#123;</span><br><span class="line">     res.writeHead(404);</span><br><span class="line">     res.end(&apos;Not found&apos;);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>由上述代码可见，对于不同的请求路径，所返回的响应信息都是由if和else来区分，所有的判断都是在一个函数中完成。当逻辑复杂时极容易出现问题，因此connect中间件产生了。</p>
+<p>connect把所有的请求拆分开，形成多个中间件。<strong>中间件是由函数组成的，它除了处理req和res对象之外，还接收一个next函数来做流控制</strong>,。我们可以把Connect看作是一堆中间件的集合。参考的博客说：</p>
+<blockquote>
+<p>http请求就相当于是水流一样流过中间件，当路径相同时，就会响应该请求，否则就继续往下流，直到结束。</p>
+</blockquote>
+<p>这有点类似于switch语句，当路径与case后的表达式相同时，就执行后面的语句。</p>
+<blockquote>
+<p>基于http模块API之上的Connect，提供了一些工具和方法让这些重复性的处理便于实现。 ————《了不起的Node.js》</p>
+</blockquote>
+<h4 id="使用connect"><a href="#使用connect" class="headerlink" title="使用connect"></a>使用connect</h4><ol>
+<li><p>首先在新目录下创建一个package.json文件，声明对”connect”模块的依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;:&quot;my-website&quot;,</span><br><span class="line">    &quot;version&quot;:&quot;0.0.1&quot;,</span><br><span class="line">    &quot;dependencies&quot;:&#123;</span><br><span class="line">        &quot;connect&quot;:&quot;1.8.7&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>引入connect模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var connect = require(&apos;connect&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过Connect创建http.Server</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var server = connect.createServer();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>接下来就可以使用connect了。我们使用中间件模式来设计一个满足下述要求的应用。</p>
+<ol>
+<li>记录请求处理时间</li>
+<li>托管静态文件</li>
+<li>处理授权<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">server.use(function(req,res,next)&#123;</span><br><span class="line">    //记录日志</span><br><span class="line">    console.err(&apos; %s %s &apos;, req.method, req.url);</span><br><span class="line">&#125;);</span><br><span class="line">server.use(function(req,res,next)&#123;</span><br><span class="line">    if(&apos;GET&apos; == req.method &amp;&amp; &apos;/images&apos; == req.url.substr(0,7)&#123;</span><br><span class="line">        //托管图片    </span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        //交给其他的中间件处理</span><br><span class="line">        next();</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br><span class="line">server.use(function(req,res,next)&#123;</span><br><span class="line">    if(&apos;GET&apos; == req.method &amp;&amp; &apos;/&apos; == req.url)&#123;</span><br><span class="line">        //响应index文件</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        //交给其他中间件处理</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">server.use(function(req,res,next)&#123;</span><br><span class="line">    //最后一个中间件，如果流到了这里，就意味着无能为力，只能返回404了</span><br><span class="line">    res.writeHead(404);</span><br><span class="line">    res.end(&apos;Not found&apos;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="自己书写中间件"><a href="#自己书写中间件" class="headerlink" title="自己书写中间件"></a>自己书写中间件</h4><p>中间件由函数组成，可以自己编写。这里由于学习进度的原因，就先不研究啦~后续有空补上</p>
+<h4 id="Connect内置中间件"><a href="#Connect内置中间件" class="headerlink" title="Connect内置中间件"></a>Connect内置中间件</h4><p>学习几个常用的中间件</p>
+<ol>
+<li><p><strong>cookieParser<br></strong><br>cookie解析中间件，解析Cookies的头通过req.cookies得到cookies。还可以通过req.secret加密cookies。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server.use(connect.cookieParser())</span><br><span class="line">//然后通过req.cookies对象访问这些cookie数据</span><br><span class="line">server.use(function(req,res,next)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>logger<br></strong><br>logger中间件将发送进来的请求信息和发送出去的响应信息打印在终端。如请求的图片，请求的方法，响应状态码等信息。</p>
+</li>
+</ol>
+<p>更多中间件的学习可以参照API或者书本。我就写到这里啦（lazy</p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>下面是一个综合的例子，用中间件实现一个登录系统。我是跟着《了不起的Node.js》书上实例代码敲的，成功实现了登录功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//首先准备一个users.json文件</span><br><span class="line">&#123;</span><br><span class="line">  &quot;sora&quot;:&#123;</span><br><span class="line">    &quot;password&quot;:&quot;sora19981025&quot;,</span><br><span class="line">    &quot;name&quot;:&quot;sora1025&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">//sign.js</span><br><span class="line">const connect = require(&apos;connect&apos;),</span><br><span class="line">      users = require(&apos;./users&apos;)</span><br><span class="line"></span><br><span class="line">var server = connect(</span><br><span class="line">  connect.logger(&apos;dev&apos;),</span><br><span class="line">  connect.bodyParser(),</span><br><span class="line">  connect.cookieParser(),</span><br><span class="line">  //出于安全性考虑，初始化session中间件时需要提供secret选项</span><br><span class="line">  connect.session(&#123;secret:&apos;my app secret&apos;&#125;),</span><br><span class="line">  //检验用户是否登录</span><br><span class="line">  function(req,res,next)&#123;</span><br><span class="line">    if(&apos;/&apos; == req.url &amp;&amp; req.session.logged_in)&#123;</span><br><span class="line">      res.writeHead(200,&#123;&apos;Content-Type&apos;:&apos;text/html&apos;&#125;);</span><br><span class="line">      res.end(</span><br><span class="line">        &apos;Welcome back,&lt;b&gt;&apos; + req.session.name + &apos;&lt;/b&gt;.&apos;</span><br><span class="line">        +&apos;&lt;a href=&quot;/logout&quot;&gt;Logout&lt;/a&gt;&apos;</span><br><span class="line">      );</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">      next();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  //展示登录表单</span><br><span class="line">  function(req,res,next)&#123;</span><br><span class="line">    if(&apos;/&apos; == req.url &amp;&amp; &apos;GET&apos; == req.method)&#123;</span><br><span class="line">      res.writeHead(200,&#123;&apos;Content-Type&apos;:&apos;text/html&apos;&#125;);</span><br><span class="line">      res.end([</span><br><span class="line">        &apos;&lt;form action=&quot;/login&quot; method=&quot;POST&quot;&gt;&apos;,</span><br><span class="line">          &apos;&lt;fieldset&gt;&apos;,</span><br><span class="line">            &apos;&lt;legend&gt;Please log in&lt;legend&gt;&apos;,</span><br><span class="line">            &apos;&lt;p&gt;User:&lt;input type=&quot;text&quot; name=&quot;user&quot;&gt;&lt;/p&gt;&apos;,</span><br><span class="line">            &apos;&lt;p&gt;Password:&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;/p&gt;&apos;,</span><br><span class="line">            &apos;&lt;button&gt;Submit&lt;/button&gt;&apos;,</span><br><span class="line">          &apos;&lt;/fieldset&gt;&apos;,</span><br><span class="line">        &apos;&lt;/form&gt;&apos;</span><br><span class="line">      ].join(&apos;&apos;))</span><br><span class="line">      </span><br><span class="line">    &#125;else&#123;</span><br><span class="line">      next();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  //检查登录表单的信息是否与用户凭证匹配</span><br><span class="line">  function(req,res,next)&#123;</span><br><span class="line">    if(&apos;/login&apos; == req.url &amp;&amp; &apos;POST&apos; == req.method)&#123;</span><br><span class="line">      res.writeHead(200);</span><br><span class="line">      if(!users[req.body.user]||req.body.password!=users[req.body.user].password)&#123;</span><br><span class="line">        res.end(&apos;Bad username/password&apos;);</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">        req.session.logged_in = true;</span><br><span class="line">        req.session.name = users[req.body.user].name;</span><br><span class="line">        res.end(&apos;Authenticated!&apos;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  function(req,res,next)&#123;</span><br><span class="line">    if(&apos;/logout&apos; == req.url)&#123;</span><br><span class="line">      req.session.logged_in = false;</span><br><span class="line">      res.writeHead(200);</span><br><span class="line">      res.end(&apos;Logged out!&apos;);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">      next();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line">server.listen(3000);</span><br></pre></td></tr></table></figure>
+<p>最后贴一下实现图<br><img src="./img/Connect/connect1.png" alt=""><br><img src="./img/Connect/connect2.png" alt=""><br><img src="./img/Connect/connect3.png" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/05/vue-bus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -599,7 +763,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -612,7 +776,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
